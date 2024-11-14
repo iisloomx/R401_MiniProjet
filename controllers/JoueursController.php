@@ -2,20 +2,21 @@
 require_once '../config/database.php';
 require_once '../models/Joueur.php';
 
-class JoueursController {
-    private $db;
-    private $joueur;
+$database = new Database();
+$db = $database->getConnection();
+$joueur = new Joueur($db);
 
-    public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
-        $this->joueur = new Joueur($this->db);
-    }
+// Déterminer l'action à exécuter
+$action = $_GET['action'] ?? 'liste';
 
-    // Méthode pour ajouter un joueur
-    public function ajouterJoueur() {
+switch ($action) {
+    case 'liste':
+        $joueurs = $joueur->obtenirTousLesJoueurs();
+        require '../views/joueurs/index.php';
+        break;
+
+    case 'ajouter':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
             $data = [
                 'numero_licence' => $_POST['numero_licence'],
                 'nom' => $_POST['nom'],
@@ -25,24 +26,43 @@ class JoueursController {
                 'poids' => $_POST['poids'],
                 'statut' => $_POST['statut']
             ];
-
-            // Appeler le modèle pour ajouter le joueur
-            if ($this->joueur->ajouterJoueur($data)) {
-                echo "Joueur ajouté avec succès!";
-                header("Location: ../views/joueurs/index.php"); // Rediriger vers la liste des joueurs
-                exit();
-            } else {
-                echo "Échec de l'ajout du joueur.";
-            }
+            $joueur->ajouterJoueur($data);
+            header("Location: JoueursController.php?action=liste");
+            exit();
         }
-    }
-}
+        require '../views/joueurs/ajouter.php';
+        break;
 
-// Vérifier l'action à effectuer
-$action = $_GET['action'] ?? null;
-$controller = new JoueursController();
+    case 'modifier':
+        $numero_licence = $_GET['numero_licence'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'numero_licence' => $numero_licence,
+                'nom' => $_POST['nom'],
+                'prenom' => $_POST['prenom'],
+                'date_naissance' => $_POST['date_naissance'],
+                'taille' => $_POST['taille'],
+                'poids' => $_POST['poids'],
+                'statut' => $_POST['statut']
+            ];
+            $joueur->mettreAJourJoueur($data);
+            header("Location: JoueursController.php?action=liste");
+            exit();
+        }
+        $joueur_info = $joueur->obtenirJoueur($numero_licence);
+        require '../views/joueurs/modifier.php';
+        break;
 
-if ($action === 'ajouter') {
-    $controller->ajouterJoueur();
+    case 'supprimer':
+        $numero_licence = $_GET['numero_licence'];
+        $joueur->supprimerJoueur($numero_licence);
+        header("Location: JoueursController.php?action=liste");
+        exit();
+        break;
+
+    default:
+        $joueurs = $joueur->obtenirTousLesJoueurs();
+        require '../views/joueurs/index.php';
+        break;
 }
 ?>
