@@ -1,7 +1,8 @@
+<?php include '../views/header.php'; ?>
+
 <?php
 require_once '../config/database.php';
 require_once '../models/Joueur.php';
-
 $database = new Database();
 $db = $database->getConnection();
 $joueur = new Joueur($db);
