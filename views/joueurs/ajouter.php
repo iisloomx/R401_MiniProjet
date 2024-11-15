@@ -1,16 +1,43 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Ajouter un Joueur</title>
+    <title>Ajouter un joueur</title>
 </head>
 <body>
-    <h1>Ajouter un Nouveau Joueur</h1>
-    <form action="JoueursController.php?action=ajouter" method="POST">
-        <label for="numero_licence">Numéro de Licence :</label>
+    <h1>Ajouter un nouveau joueur</h1>
+    <form action="JoueursController.php?action=ajouter" method="post">
+        <label for="numero_licence">Numéro de licence:</label>
         <input type="text" name="numero_licence" id="numero_licence" required><br>
-        <!-- Reste des champs du formulaire -->
-        <button type="submit">Ajouter le Joueur</button>
+
+        <label for="nom">Nom:</label>
+        <input type="text" name="nom" id="nom" required><br>
+
+        <label for="prenom">Prénom:</label>
+        <input type="text" name="prenom" id="prenom" required><br>
+
+        <label for="date_naissance">Date de naissance:</label>
+        <input type="date" name="date_naissance" id="date_naissance" required><br>
+
+        <label for="taille">Taille (cm):</label>
+        <input type="number" name="taille" id="taille" required><br>
+
+        <label for="poids">Poids (kg):</label>
+        <input type="number" name="poids" id="poids" required><br>
+
+        <label>Statut:</label><br>
+        <input type="radio" name="statut" value="Actif" id="actif" checked>
+        <label for="actif">Actif</label><br>
+
+        <input type="radio" name="statut" value="Blessé" id="blesse">
+        <label for="blesse">Blessé</label><br>
+
+        <input type="radio" name="statut" value="Suspendu" id="suspendu">
+        <label for="suspendu">Suspendu</label><br>
+
+        <input type="radio" name="statut" value="Absent" id="absent">
+        <label for="absent">Absent</label><br><br>
+
+        <button type="submit">Ajouter</button>
     </form>
 </body>
 </html>
