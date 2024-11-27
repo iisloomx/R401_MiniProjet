@@ -21,36 +21,6 @@ Logo dans le header */
     height: 50px;
 }
 
-/* Barre de recherche
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    padding: 5px;
-    max-width: 300px;
-    flex-grow: 1;
-    margin: 0 20px;
-}
-
-.search-bar input[type="text"] {
-    border: none;
-    outline: none;
-    padding: 5px;
-    width: 100%;
-    font-size: 16px;
-    border-radius: 5px 0 0 5px;
-}
-
-.search-bar button {
-    background: none;
-    border: none;
-    color: #1a2a44;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 5px;
-} */
-
 /* Liens de navigation dans le header */
 .nav-links {
     display: flex;
@@ -96,123 +66,112 @@ Logo dans le header */
     color: #ddd;
 }
 
-/* Conteneur pour les formulaires (Connexion, Inscription) */
-.form-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+/* Conteneur pour la table */
+.table-container {
+    max-width: 90%;
     margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Titres dans les formulaires */
-h1, h2 {
-    color: #333;
+/* Titre de la table */
+.table-container h1 {
     text-align: center;
+    color: #333;
     margin-bottom: 20px;
-    font-size: 1.8em;
 }
 
-/* Champs de formulaire */
-label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #555;
-    text-align: left;
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-}
-
-/* Bouton de soumission */
-button[type="submit"] {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    width: 100%;
+/* Lien Ajouter un Match */
+.add-match {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
     font-size: 16px;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-/* Lien vers la page d'inscription */
-p {
-    color: #333;
-    text-align: center;
-    margin-top: 15px;
-}
-
-p a {
-    color: #4CAF50;
-    text-decoration: none;
-}
-
-p a:hover {
-    color: #333;
+.add-match:hover {
     text-decoration: underline;
 }
 
-/* Messages d'erreur et de succès */
-p[style="color:red;"],
-p[style="color:green;"] {
-    font-size: 0.9em;
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 10px;
+    font-size: 16px;
+}
+
+table th,
+table td {
     text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
-/* Conteneur pour le tableau de bord */
-.dashboard-container {
-    text-align: center;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-}
-
-/* Titre de la page */
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-/* Menu de navigation dans le tableau de bord */
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-}
-
-nav ul li {
-    margin: 10px 0;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #4CAF50;
+table th {
+    background-color: #f4a261;
+    color: white;
     font-weight: bold;
-    font-size: 18px;
 }
 
-nav ul li a:hover {
-    color: #333;
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
-.logo img {
-    height: 75px; /* Increase this to make the image larger */
-    width: auto;
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Actions */
+.action-buttons a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.action-buttons .edit {
+    color: #4CAF50;
+}
+
+.action-buttons .delete {
+    color: #e74c3c;
+}
+
+.action-buttons a:hover {
+    text-decoration: underline;
+}
+
+/* Message Aucun Match Trouvé */
+.no-data {
+    text-align: center;
+    color: #555;
+    font-style: italic;
+    padding: 10px;
+}
+
+/* Footer principal */
+.main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cf700b;
+    padding: 10px 20px;
+    color: #fff;
+    height: 50px;
+    margin-top: 20px;
+}
+
+/* Footer links */
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
 }
