@@ -16,10 +16,11 @@ body {
     box-shadow: 0 4px 8px rgba(216, 117, 12, 0.1);
 }
 
-Logo dans le header */
-/* .logo img {
+/* Logo dans le header */ 
+ .logo img {
     height: 50px;
-}
+    width: auto;
+} 
 
 /* Liens de navigation dans le header */
 .nav-links {
