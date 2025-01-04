@@ -6,6 +6,7 @@
   <title>Ajouter un Match</title>
   <!-- Lien éventuel vers votre CSS -->
   <link rel="stylesheet" href="../views/css/style.css">
+
 </head>
 <body>
 

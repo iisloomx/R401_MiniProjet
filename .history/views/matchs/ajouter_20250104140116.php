@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ajouter un Match</title>
   <!-- Lien éventuel vers votre CSS -->
-  <link rel="stylesheet" href="../views/css/style.css">
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
 

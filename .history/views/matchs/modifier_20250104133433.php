@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../config/database.php';
+require_once '/../../config/database.php';
 
 // Check if a match ID is provided in the URL
 if (!isset($_GET['id'])) {

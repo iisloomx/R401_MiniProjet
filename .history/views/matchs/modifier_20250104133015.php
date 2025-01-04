@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../config/database.php';
+require_once '../config/database.php';
 
 // Check if a match ID is provided in the URL
 if (!isset($_GET['id'])) {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     echo "Match modifié avec succès.";
-    header("Location: index.php"); // Redirect to match list page
+    header("Location: matchs.php"); // Redirect to match list page
     exit;
 }
 ?>

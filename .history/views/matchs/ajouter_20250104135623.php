@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ajouter un Match</title>
-  <!-- Lien éventuel vers votre CSS -->
-  <link rel="stylesheet" href="../views/css/style.css">
-</head>
-<body>
-
-<!-- Inclusion possible d'un header commun -->
-<?php include '../views/header.php'; ?>
-
 <div class="container">
     <h1>Ajouter un Match</h1>
     <form action="MatchsController.php?action=ajouter" method="POST">
@@ -77,7 +63,7 @@
             >
         </div>
         
-        <!-- Équipe adverse (optionnel) -->
+        <!-- Équipe adverse (si nécessaire) -->
         <div>
             <label for="nom_equipe_adverse">Nom de l'équipe adverse :</label>
             <input 
@@ -105,7 +91,7 @@
                 type="text" 
                 name="resultat" 
                 id="resultat" 
-                placeholder="Exemple : 3-2, Victoire, etc."
+                placeholder="Exemple : 3-2 ou Victoire, etc."
             >
         </div>
         
@@ -113,6 +99,3 @@
         <button type="submit">Ajouter</button>
     </form>
 </div>
-
-</body>
-</html>
