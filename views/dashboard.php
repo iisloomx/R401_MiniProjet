@@ -28,11 +28,10 @@ if (!isset($_SESSION['utilisateur'])) {
             <ul>
                 <li><a href="../controllers/JoueursController.php?action=liste">Gestion des Joueurs</a></li>
                 <li><a href="../controllers/MatchsController.php?action=liste">Gestion des Matchs</a></li>
-                <li><a href="../controllers/DeconnexionController.php">Déconnexion</a></li>
+                <li><a href="../controllers/DeconnexionController.php" class="deconnexion">Déconnexion</a></li>
             </ul>
         </nav>
 
-        <p>Utilisez les liens ci-dessus pour gérer les joueurs, les matchs ou pour vous déconnecter.</p>
     </div>
 </body>
 </html>

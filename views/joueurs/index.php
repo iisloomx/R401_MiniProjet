@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Liste des Joueurs</title>
+    <link rel="stylesheet" href="../css/style.css">
+
 </head>
 <body>
     <h1>Liste des Joueurs</h1>
-    <a href="JoueursController.php?action=ajouter">Ajouter un joueur</a>
+    <a href="JoueursController.php?action=ajouter" class="btn btn-add">Ajouter un joueur</a>
     <table border="1">
         <tr>
             <th>Numéro Licence</th>

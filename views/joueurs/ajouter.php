@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Ajouter un joueur</title>
+    <link rel="stylesheet" href="../css/style.css">
+
 </head>
 <body>
     <h1>Ajouter un nouveau joueur</h1>
