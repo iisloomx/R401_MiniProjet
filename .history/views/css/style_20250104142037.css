@@ -47,15 +47,7 @@ body {
     color: #333;
     transform: scale(1.05);
 }
-.table-container {
-    max-width: 800px;         /* Limite la largeur */
-    margin: 50px auto;        /* Centre horizontalement, + espace vertical de 50px */
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;       /* Centre le texte (titre, etc.) */
-  }
+
 /* Container Styles */
 .container {
     max-width: 800px;
@@ -64,7 +56,7 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centre le contenu */
+    text-align: center; /* Centre le contenu (h1, etc.) */
 }
 
 /* Page Titles */
@@ -72,29 +64,6 @@ body {
     font-size: 32px;
     color: #333;
     margin-bottom: 20px;
-}
-
-/* --- AJOUT : Style du bouton "Ajouter un Match" --- */
-.btn-add-match {
-    display: inline-block;
-    background-color: #4CAF50; 
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 0 auto 20px auto; /* Espace en bas + centrage si besoin */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-add-match:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-/* Pour forcer la couleur même si lien "visité" */
-.btn-add-match:visited {
-    color: #fff;
 }
 
 /* Forms */
@@ -210,7 +179,7 @@ table a.delete:hover {
 
 /* Buttons for Add/Edit/Delete */
 .btn {
-    display: inline-block;
+    display: inline-block;     /* Autorise le margin auto (si parent text-align: center) */
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -218,16 +187,19 @@ table a.delete:hover {
     background-color: #4CAF50;
     text-decoration: none;
     border-radius: 5px;
-    margin: 20px auto;
+    margin: 20px auto;         /* Centrage vertical/horizontal si on veut le bouton centré */
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
 .btn:hover {
     background-color: #45a049;
     transform: scale(1.05);
 }
+
 .btn.delete {
     background-color: #e74c3c;
 }
+
 .btn.delete:hover {
     background-color: #c0392b;
 }
@@ -304,11 +276,12 @@ table a.delete:hover {
     color: #333;
 }
 
+/* Form-container heading */
 .form-container h2 {
     font-size: 28px;
     margin-bottom: 20px;
     color: #333;
-    text-align: center; /* Center the heading */
+    text-align: center; 
 }
 
 /* Dashboard Container */
@@ -374,4 +347,3 @@ table a.delete:hover {
 .dashboard-container nav ul li a.deconnexion:hover {
     background-color: #c0392b; /* Darker red on hover */
 }
-

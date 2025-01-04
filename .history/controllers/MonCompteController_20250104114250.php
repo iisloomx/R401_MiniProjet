@@ -17,8 +17,7 @@ class MonCompteController {
         }
 
         // Créer une instance de connexion PDO
-        $database = new Database();
-        $db = $database->getConnection();
+        $db = Database::getConnection();
 
         // Créer une instance du modèle
         $utilisateurModel = new Utilisateur($db);
@@ -26,9 +25,7 @@ class MonCompteController {
         // Récupérer l’utilisateur par son id_utilisateur en session
         $user = $utilisateurModel->getUtilisateurParId($_SESSION['id_utilisateur']);
 
-        require_once __DIR__ . '/../views/mon_compte.php';
-        // Utiliser $user dans la vue
-        echo $user;
+        // Inclure la vue mon_compte.php en lui passant $user
         require_once __DIR__ . '/../views/mon_compte.php';
     }
 }

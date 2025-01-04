@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Matchs</title>
-    <!-- Vérifiez/ajustez le chemin vers votre CSS -->
+    <!-- Ajustez le chemin vers votre CSS selon votre structure de dossiers -->
     <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
@@ -40,14 +40,10 @@
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
                             <td><?= htmlspecialchars($match['resultat']); ?></td>
                             <td class="action-buttons">
-                                <a 
-                                    href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" 
-                                    class="edit">
+                                <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="edit">
                                     Modifier
                                 </a>
-                                <a 
-                                    href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" 
-                                    class="delete">
+                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="delete">
                                     Supprimer
                                 </a>
                             </td>

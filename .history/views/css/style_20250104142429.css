@@ -47,15 +47,7 @@ body {
     color: #333;
     transform: scale(1.05);
 }
-.table-container {
-    max-width: 800px;         /* Limite la largeur */
-    margin: 50px auto;        /* Centre horizontalement, + espace vertical de 50px */
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;       /* Centre le texte (titre, etc.) */
-  }
+
 /* Container Styles */
 .container {
     max-width: 800px;
@@ -374,4 +366,3 @@ table a.delete:hover {
 .dashboard-container nav ul li a.deconnexion:hover {
     background-color: #c0392b; /* Darker red on hover */
 }
-

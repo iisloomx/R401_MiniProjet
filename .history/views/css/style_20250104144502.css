@@ -375,3 +375,89 @@ table a.delete:hover {
     background-color: #c0392b; /* Darker red on hover */
 }
 
+/* Global container for the form */
+.table-container {
+    max-width: 800px;         /* Same as "Liste des Matchs" */
+    margin: 50px auto;        /* Center horizontally */
+    background-color: #fff;   /* White background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    text-align: center;       /* Center align text */
+}
+
+/* Page Titles */
+.table-container h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Align labels to the left */
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"] {
+    width: 100%;             /* Full-width inputs */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #4CAF50;   /* Green border on focus */
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+/* Radio button group */
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Submit Button */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}

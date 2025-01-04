@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
-    <div class="table-container">
-        <h1>Ajouter un joueur</h1>
+    <div class="form-container">
+        <h1>Ajouter un nouveau joueur</h1>
         <form action="JoueursController.php?action=ajouter" method="post">
             <div class="form-group">
                 <label for="numero_licence">Numéro de licence:</label>

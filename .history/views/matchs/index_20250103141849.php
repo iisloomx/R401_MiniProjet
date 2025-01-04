@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Matchs</title>
-    <!-- Vérifiez/ajustez le chemin vers votre CSS -->
     <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
     <div class="table-container">
         <h1>Liste des Matchs</h1>
         
-        <!-- Bouton "Ajouter un Match" -->
-        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">
-            Ajouter un Match
-        </a>
+        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">Ajouter un Match</a>
         
-        <!-- Liste des matchs -->
         <?php if (!empty($matchs)) : ?>
             <table>
                 <thead>
@@ -40,16 +35,8 @@
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
                             <td><?= htmlspecialchars($match['resultat']); ?></td>
                             <td class="action-buttons">
-                                <a 
-                                    href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" 
-                                    class="edit">
-                                    Modifier
-                                </a>
-                                <a 
-                                    href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" 
-                                    class="delete">
-                                    Supprimer
-                                </a>
+                                <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="edit">Modifier</a>
+                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="delete">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
