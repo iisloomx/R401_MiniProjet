@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 // On inclut le header s'il est nécessaire (vous l'avez déjà plus haut dans ajouter.php).
  include '../views/header.php'; // <-- Décommenter si vous en avez besoin ici

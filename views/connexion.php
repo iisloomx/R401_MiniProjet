@@ -1,4 +1,7 @@
-<?php include 'header.php'; ?>
+<?php
+session_start(); // Démarrez la session au début du fichier
+include 'header.php';
+?>
 
 <div class="form-container">
     <h2>Connexion</h2>

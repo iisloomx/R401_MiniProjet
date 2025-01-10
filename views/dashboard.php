@@ -1,11 +1,12 @@
-<?php include 'header.php'; ?>
-
 <?php
-session_start();
+session_start(); // Démarrez la session au début du fichier
+
 if (!isset($_SESSION['utilisateur'])) {
     header("Location: connexion.php");
     exit();
 }
+
+include 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,6 @@ if (!isset($_SESSION['utilisateur'])) {
                 <li><a href="../controllers/DeconnexionController.php" class="deconnexion">Déconnexion</a></li>
             </ul>
         </nav>
-
     </div>
 </body>
 </html>
