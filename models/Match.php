@@ -28,6 +28,32 @@ class GameMatch {
         return $stmt->execute();
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * Récupère les matchs futurs
+     */
+    public function obtenirMatchsAVenir() {
+        $query = "SELECT * FROM " . $this->table . " WHERE date_match > NOW()";  
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Récupère les matchs passés
+     */
+    public function obtenirMatchsPasses() {
+        $query = "SELECT * FROM " . $this->table . " WHERE date_match < NOW()"; 
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Supprime un match par son ID
+     */
+>>>>>>> Stashed changes
     public function supprimerMatch($id_match) {
         $query = "DELETE FROM " . $this->table . " WHERE id_match = :id_match";
         $stmt = $this->conn->prepare($query);

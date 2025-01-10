@@ -39,8 +39,83 @@ body {
     text-decoration: underline;
 }
 
+<<<<<<< Updated upstream
 /* Boutons Compte et Déconnexion */
 .btn-account {
+=======
+/* Page Titles */
+.container h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- AJOUT : Style du bouton "Ajouter un Match" --- */
+.btn-index-match {
+    display: inline-block;
+    background-color: #4CAF50; 
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0 auto 20px auto; /* Espace en bas + centrage si besoin */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-index-match:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Pour forcer la couleur même si lien "visité" */
+.btn-index-match:visited {
+    color: #fff;
+}
+
+/* Forms */
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form input[type="password"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus,
+form input[type="password"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 15px;
+>>>>>>> Stashed changes
     background-color: #4CAF50;
     padding: 8px 15px;
     border-radius: 5px;

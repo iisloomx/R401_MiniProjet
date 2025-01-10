@@ -11,10 +11,6 @@
     <div class="table-container">
         <h1>Liste des Matchs</h1>
         
-<<<<<<< Updated upstream
-        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">Ajouter un Match</a>
-        
-=======
         <!-- Buttons to filter matches -->
         <div class="btn-group">
             <a href="../controllers/MatchsController.php?action=matches_a_venir" class="btn-add-match">
@@ -31,7 +27,6 @@
         </a>
         
         <!-- Match List -->
->>>>>>> Stashed changes
         <?php if (!empty($matchs)) : ?>
             <table>
                 <thead>
