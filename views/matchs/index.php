@@ -11,10 +11,6 @@
     <div class="table-container">
         <h1>Liste des Matchs</h1>
         
-<<<<<<< Updated upstream
-        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">Ajouter un Match</a>
-        
-=======
         <!-- Buttons to filter matches -->
         <div class="btn-group">
             <a href="../controllers/MatchsController.php?action=matches_a_venir" class="btn-add-match">
@@ -31,7 +27,6 @@
         </a>
         
         <!-- Match List -->
->>>>>>> Stashed changes
         <?php if (!empty($matchs)) : ?>
             <table>
                 <thead>
@@ -55,6 +50,7 @@
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
                             <td><?= htmlspecialchars($match['resultat']); ?></td>
                             <td class="action-buttons">
+                                <a href="../controllers/MatchsController.php?action=details&id_match=<?= $match['id_match']; ?>" class="details">Feuille du match</a>
                                 <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="edit">Modifier</a>
                                 <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="delete">Supprimer</a>
                             </td>
@@ -66,5 +62,7 @@
             <p class="no-data">Aucun match trouvé.</p>
         <?php endif; ?>
     </div>
+
+    
 </body>
 </html>

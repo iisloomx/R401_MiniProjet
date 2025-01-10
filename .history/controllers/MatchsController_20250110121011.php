@@ -72,6 +72,9 @@ switch ($action) {
         $matchs = $gameMatch->obtenirMatchsPasses();
         require '../views/matchs/index.php';
         break;
+
+
+
     
 
     case 'supprimer':
