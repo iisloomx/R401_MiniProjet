@@ -31,7 +31,7 @@ switch ($action) {
         require '../views/matchs/ajouter.php';
         break;
 
-        case 'modifier':
+    case 'modifier':
             $id_match = $_GET['id_match'] ?? null;
             if (!$id_match) {
                 echo "ID du match non spécifié.";
