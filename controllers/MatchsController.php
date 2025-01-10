@@ -72,6 +72,18 @@ switch ($action) {
         $matchs = $gameMatch->obtenirMatchsPasses();
         require '../views/matchs/index.php';
         break;
+
+
+    case 'details' :
+        $id_match = $_GET['id_match'] ?? null;
+        if (!$id_match) {
+            echo "ID du match non spécifié.";
+            exit;
+        }
+        $match = $gameMatch->obtenirMatch($id_match);
+        require '../views/matchs/details.php';
+
+        break;
     
 
     case 'supprimer':

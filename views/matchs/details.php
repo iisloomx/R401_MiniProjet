@@ -12,12 +12,6 @@
         <h1>Détails du Match</h1>
 
         <!-- Affichage des informations du match -->
-        <p><strong>Date :</strong> <?= htmlspecialchars($match['date_match']); ?></p>
-        <p><strong>Heure :</strong> <?= htmlspecialchars($match['heure_match']); ?></p>
-        <p><strong>Équipe Adverse :</strong> <?= htmlspecialchars($match['nom_equipe_adverse']); ?></p>
-        <p><strong>Lieu :</strong> <?= htmlspecialchars($match['lieu_de_rencontre']); ?></p>
-        <p><strong>Résultat :</strong> <?= htmlspecialchars($match['resultat']); ?></p>
-
         <?php if (isset($match)): ?>
             <p><strong>Date :</strong> <?= htmlspecialchars($match['date_match']); ?></p>
             <p><strong>Heure :</strong> <?= htmlspecialchars($match['heure_match']); ?></p>
