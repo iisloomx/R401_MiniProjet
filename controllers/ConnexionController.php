@@ -17,9 +17,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Vérification des informations de connexion
     if ($utilisateur->verifierUtilisateur($nom_utilisateur, $mot_de_passe)) {
-        // Authentification réussie : démarrer la session utilisateur
+        // Authentification réussie : on stocke l'ID de l'utilisateur dans la session
+        // (On fait une petite requête pour récupérer l'id_utilisateur, 
+        //  puisque verifierUtilisateur() renvoie juste true/false)
+        $query = "SELECT id_utilisateur 
+                  FROM utilisateur 
+                  WHERE nom_utilisateur = :nom_utilisateur 
+                  LIMIT 1";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':nom_utilisateur', $nom_utilisateur);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si on a trouvé un id_utilisateur, on le met en session
+        if ($row && isset($row['id_utilisateur'])) {
+            $_SESSION['id_utilisateur'] = $row['id_utilisateur'];
+        }
+
+        // Vous pouvez garder l’ancien usage si vous souhaitez aussi conserver le nom utilisateur :
         $_SESSION['utilisateur'] = $nom_utilisateur;
-        header("Location: ../views/dashboard.php"); // Redirection vers le tableau de bord
+
+        // Redirection vers le tableau de bord
+        header("Location: ../views/dashboard.php");
         exit();
     } else {
         // Authentification échouée : message d'erreur
