@@ -52,7 +52,7 @@
                             <td class="action-buttons">
                                 <a href="../controllers/MatchsController.php?action=details&id_match=<?= $match['id_match']; ?>" class="details">Feuille du match</a>
                                 <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn-edit">Modifier</a>
-                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn-delete">Supprimer</a>
+                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="delete">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
