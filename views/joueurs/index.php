@@ -45,6 +45,9 @@
                 </tbody>
             </table>
         <?php endif; ?>
+        <p>
+            <a href="../views/dashboard.php" class="btn btn-back">Retour au dashboard</a>
+        </p>
     </div>
 </body>
 </html>

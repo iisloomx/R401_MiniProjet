@@ -45,13 +45,10 @@
                 <div class="radio-group">
                     <input type="radio" name="statut" value="Actif" id="actif" checked>
                     <label for="actif">Actif</label>
-
                     <input type="radio" name="statut" value="Blessé" id="blesse">
                     <label for="blesse">Blessé</label>
-
                     <input type="radio" name="statut" value="Suspendu" id="suspendu">
                     <label for="suspendu">Suspendu</label>
-
                     <input type="radio" name="statut" value="Absent" id="absent">
                     <label for="absent">Absent</label>
                 </div>

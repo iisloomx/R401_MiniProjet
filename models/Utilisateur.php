@@ -89,4 +89,29 @@ class Utilisateur {
 
         return $stmt->execute();
     }
+    public function updatePassword($id_utilisateur, $hashed_password) {
+        try {
+            
+            $id_utilisateur = (int) $id_utilisateur;    
+           
+            $query = "UPDATE utilisateur SET mot_de_passe = :mot_de_passe WHERE id_utilisateur = :id_utilisateur";
+            $stmt = $this->conn->prepare($query);
+    
+            $stmt->bindParam(':mot_de_passe', $hashed_password, PDO::PARAM_STR);
+            $stmt->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+    
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                $errorInfo = $stmt->errorInfo();
+                throw new Exception("Database error: " . $errorInfo[2]);
+            }
+        } catch (Exception $e) {
+          
+            error_log($e->getMessage()); 
+            return false; 
+        }
+    }
+    
+    
 }

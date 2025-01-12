@@ -1,5 +1,7 @@
 <?php
-session_start(); // Démarrez la session au début du fichier
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include 'header.php';
 ?>
 

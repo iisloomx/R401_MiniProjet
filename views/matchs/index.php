@@ -12,13 +12,13 @@
         <h1>Liste des Matchs</h1>
         
         <!-- Bouton "Ajouter un Match" -->
-        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">
+        <a href="../controllers/MatchsController.php?action=ajouter" class="btn btn-add-match">
             Ajouter un Match
         </a>
         
         <!-- Liste des matchs -->
         <?php if (!empty($matchs)) : ?>
-            <table>
+            <table class="styled-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -42,12 +42,13 @@
                             <td class="action-buttons">
                                 <a 
                                     href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" 
-                                    class="edit">
+                                    class="btn btn-edit">
                                     Modifier
                                 </a>
                                 <a 
                                     href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" 
-                                    class="delete">
+                                    class="btn btn-delete" 
+                                    onclick="return confirm('Voulez-vous vraiment supprimer ce match ?');">
                                     Supprimer
                                 </a>
                             </td>
@@ -58,6 +59,7 @@
         <?php else : ?>
             <p class="no-data">Aucun match trouvé.</p>
         <?php endif; ?>
+        <a href="../views/dashboard.php" class="btn btn-back">Retour au dashboard</a>
     </div>
 </body>
 </html>

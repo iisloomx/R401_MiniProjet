@@ -47,15 +47,17 @@ body {
     color: #333;
     transform: scale(1.05);
 }
+
 .table-container {
-    max-width: 800px;         /* Limite la largeur */
-    margin: 50px auto;        /* Centre horizontalement, + espace vertical de 50px */
+    max-width: 800px;
+    margin: 50px auto;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;       /* Centre le texte (titre, etc.) */
-  }
+    text-align: center;
+}
+
 /* Container Styles */
 .container {
     max-width: 800px;
@@ -64,7 +66,7 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centre le contenu */
+    text-align: center;
 }
 
 /* Page Titles */
@@ -77,13 +79,13 @@ body {
 /* --- AJOUT : Style du bouton "Ajouter un Match" --- */
 .btn-add-match {
     display: inline-block;
-    background-color: #4CAF50; 
+    background-color: #4CAF50;
     color: #fff;
     font-weight: bold;
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
-    margin: 0 auto 20px auto; /* Espace en bas + centrage si besoin */
+    margin: 0 auto 20px auto;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -155,57 +157,51 @@ form button:hover {
 }
 
 /* Table Styles */
-table {
+.styled-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     font-size: 16px;
-    text-align: center;
+    text-align: left; /* Changed from center to left */
+    table-layout: fixed; /* Added to fix table layout */
 }
 
-table th,
-table td {
+.styled-table th,
+.styled-table td {
     padding: 15px;
     border: 1px solid #ddd;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
-table th {
+.styled-table th {
     background-color: #f4a261;
     color: white;
     font-weight: bold;
 }
 
-table tr:nth-child(even) {
+.styled-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-table tr:hover {
+.styled-table tr:hover {
     background-color: #f1f1f1;
 }
 
 /* Links in Table */
-table a {
+.styled-table a {
     text-decoration: none;
     font-weight: bold;
-    color: #4CAF50;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
-table a:hover {
+.styled-table a:hover {
     background-color: #4CAF50;
     color: white;
     transform: scale(1.05);
-}
-
-table a.delete {
-    color: #e74c3c;
-}
-
-table a.delete:hover {
-    background-color: #e74c3c;
-    color: white;
 }
 
 /* Buttons for Add/Edit/Delete */
@@ -215,21 +211,46 @@ table a.delete:hover {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #4CAF50;
     text-decoration: none;
     border-radius: 5px;
-    margin: 20px auto;
+    margin: 10px 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
 .btn:hover {
-    background-color: #45a049;
     transform: scale(1.05);
 }
-.btn.delete {
-    background-color: #e74c3c;
+
+.btn-add {
+    background-color: #4CAF50; /* Green */
 }
-.btn.delete:hover {
+
+.btn-add:hover {
+    background-color: #45a049;
+}
+
+.btn-edit {
+    background-color: #3498db; /* Blue */
+}
+
+.btn-edit:hover {
+    background-color: #2980b9;
+}
+
+.btn-delete {
+    background-color: #e74c3c; /* Red */
+}
+
+.btn-delete:hover {
     background-color: #c0392b;
+}
+
+.btn-back {
+    background-color: #9b59b6; /* Purple */
+}
+
+.btn-back:hover {
+    background-color: #8e44ad;
 }
 
 /* Footer Styles */
@@ -271,7 +292,7 @@ table a.delete:hover {
         padding: 20px;
     }
 
-    table {
+    .styled-table {
         font-size: 14px;
     }
 
@@ -308,7 +329,7 @@ table a.delete:hover {
     font-size: 28px;
     margin-bottom: 20px;
     color: #333;
-    text-align: center; /* Center the heading */
+    text-align: center;
 }
 
 /* Dashboard Container */
@@ -368,10 +389,52 @@ table a.delete:hover {
 
 /* Déconnexion Button */
 .dashboard-container nav ul li a.deconnexion {
-    background-color: #e74c3c; /* Red background */
+    background-color: #e74c3c;
 }
 
 .dashboard-container nav ul li a.deconnexion:hover {
-    background-color: #c0392b; /* Darker red on hover */
+    background-color: #c0392b;
 }
 
+/* Styles pour les boutons radio et leurs labels */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.radio-group label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.no-data {
+    color: #555;
+    font-size: 16px;
+    margin-top: 20px;
+}
