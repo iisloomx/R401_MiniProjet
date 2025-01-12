@@ -1,11 +1,12 @@
-<?php include 'header.php'; ?>
-
 <?php
-session_start();
+session_start(); // Démarrez la session au début du fichier
+
 if (!isset($_SESSION['utilisateur'])) {
     header("Location: connexion.php");
     exit();
 }
+
+include 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,10 +29,10 @@ if (!isset($_SESSION['utilisateur'])) {
             <ul>
                 <li><a href="../controllers/JoueursController.php?action=liste">Gestion des Joueurs</a></li>
                 <li><a href="../controllers/MatchsController.php?action=liste">Gestion des Matchs</a></li>
+                <li><a href="../controllers/StatistiquesController.php?action=afficher">Statistiques</a></li> <!-- Nouveau bouton -->
                 <li><a href="../controllers/DeconnexionController.php" class="deconnexion">Déconnexion</a></li>
             </ul>
         </nav>
-
     </div>
 </body>
 </html>

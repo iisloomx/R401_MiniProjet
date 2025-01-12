@@ -1,4 +1,9 @@
-<?php include 'header.php'; ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include 'header.php';
+?>
 
 <div class="form-container">
     <h2>Connexion</h2>
