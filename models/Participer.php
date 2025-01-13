@@ -49,8 +49,9 @@
 
         // If a record is found, we don't insert a duplicate
         if ($stmt->rowCount() > 0) {
-            return false; // Player is already selected, don't insert
+            throw new Exception("Le joueur est déjà sélectionné pour ce match.");
         }
+        
 
         // If no record is found, proceed with the insertion
         $query = "INSERT INTO " . $this->table . " (numero_licence, id_match, role, poste, evaluation) 

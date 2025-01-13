@@ -32,5 +32,20 @@ class Commentaire {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function obtenirDernierCommentaireParJoueur($numero_licence) {
+        $query = "SELECT * FROM " . $this->table . " 
+                  WHERE numero_licence = :numero_licence 
+                  ORDER BY id_commentaire DESC 
+                  LIMIT 1";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':numero_licence', $numero_licence);
+        $stmt->execute();
+    
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Return a single comment
+    }
+    
 }
 ?>

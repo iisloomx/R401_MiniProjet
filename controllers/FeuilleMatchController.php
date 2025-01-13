@@ -3,12 +3,15 @@ require_once '../config/database.php';
 require_once '../models/Participer.php';
 require_once '../models/Joueur.php';
 require_once '../models/Match.php';
+require_once '../models/Commentaire.php';
 
 $database = new Database();
 $db = $database->getConnection();
 $participer = new Participer($db);
 $gameMatch = new GameMatch($db);
 $joueur = new Joueur($db);
+$commentaire = new Commentaire($db);
+
 
 $action = $_GET['action'] ?? 'selectionner';
 
@@ -32,26 +35,32 @@ switch ($action) {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($isMatchInTheFuture) {
-                // If the match is in the future, we allow adding players but no evaluations
-                foreach ($_POST['joueurs'] as $numero_licence => $data) {
-                    $participer->ajouterSelection([
-                        'numero_licence' => $numero_licence,
-                        'id_match' => $id_match,
-                        'role' => $data['role'],
-                        'poste' => $data['poste'],
-                        'evaluation' => null, // No evaluation for future matches
-                    ]);
+                // Comptez les titulaires
+                $titulaireCount = 0;
+                foreach ($_POST['joueurs'] as $data) {
+                    if ($data['role'] === 'Titulaire') {
+                        $titulaireCount++;
+                    }
                 }
-            } else {
-                // If the match is in the past, we allow evaluations but no adding players
-                foreach ($_POST['evaluation'] as $id => $evaluation) {
-                    $participer->mettreAJourEvaluation($id, $evaluation);
+        
+                // Vérifiez si le nombre de titulaires est suffisant
+                $minimumPlayers = 11; // Par exemple, pour le football
+                if ($titulaireCount < $minimumPlayers) {
+                    $error = "Le nombre minimum de titulaires est $minimumPlayers.";
+                } else {
+                    foreach ($_POST['joueurs'] as $numero_licence => $data) {
+                        $participer->ajouterSelection([
+                            'numero_licence' => $numero_licence,
+                            'id_match' => $id_match,
+                            'role' => $data['role'],
+                            'poste' => $data['poste'],
+                            'evaluation' => null,
+                        ]);
+                    }
+                    header("Location: FeuilleMatchController.php?action=selectionner&id_match=$id_match");
+                    exit();
                 }
             }
-
-            // Redirect to the same page after insertion or evaluation
-            header("Location: FeuilleMatchController.php?action=selectionner&id_match=$id_match");
-            exit();
         }
 
         // Get the existing selections for the match
