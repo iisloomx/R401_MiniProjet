@@ -1,3 +1,5 @@
+<?php include '../views/header.php'; ?>
+
 <!-- views/matchs/index.php -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -50,9 +52,9 @@
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
                             <td><?= htmlspecialchars($match['resultat']); ?></td>
                             <td class="action-buttons">
-                                <a href="../controllers/MatchsController.php?action=details&id_match=<?= $match['id_match']; ?>" class="details">Feuille du match</a>
-                                <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn-edit">Modifier</a>
-                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn-delete">Supprimer</a>
+                                <a href="../controllers/FeuilleMatchController.php?action=selectionner&id_match=<?= $match['id_match']; ?>" class="btn btn-add">Feuille du match</a>
+                                <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">Modifier</a>
+                                <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -66,3 +68,5 @@
     
 </body>
 </html>
+<?php include '../views/footer.php'; ?>
+

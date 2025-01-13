@@ -1,3 +1,5 @@
+<?php include '../views/header.php'; ?>
+
 <!-- views/matchs/details.php -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -54,3 +56,4 @@
     </div>
 </body>
 </html>
+<?php include '../views/footer.php'; ?>

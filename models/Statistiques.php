@@ -32,11 +32,11 @@ class Statistiques
                 j.nom,
                 j.prenom,
                 j.statut,
-                COUNT(CASE WHEN p.rôle = 'Titulaire' THEN 1 END) AS titularisations,
-                COUNT(CASE WHEN p.rôle = 'Remplaçant' THEN 1 END) AS remplacements,
+                COUNT(CASE WHEN p.role = 'Titulaire' THEN 1 END) AS titularisations,
+                COUNT(CASE WHEN p.role = 'Remplaçant' THEN 1 END) AS remplacements,
                 AVG(p.evaluation) AS moyenne_evaluations,
                 COUNT(DISTINCT p.id_match) AS matchs_joues,
-                SUM(CASE WHEN m.score_equipe1 > m.score_equipe2 THEN 1 ELSE 0 END) AS matchs_gagnes
+                SUM(CASE WHEN m.resultat = 'Victoire' THEN 1 ELSE 0 END) AS matchs_gagnes
             FROM joueur j
             LEFT JOIN participer p ON j.numero_licence = p.numero_licence
             LEFT JOIN match_ m ON p.id_match = m.id_match

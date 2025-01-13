@@ -70,5 +70,13 @@ class Joueur {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Obtenir les joueurs actifs
+    public function obtenirJoueursActifs() {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE statut = 'Actif'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

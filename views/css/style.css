@@ -156,6 +156,7 @@ form button:hover {
     transform: scale(1.05);
 }
 
+
 /* Table Styles */
 .styled-table {
     width: 100%;
@@ -227,6 +228,22 @@ form button:hover {
 
 .btn-add:hover {
     background-color: #45a049;
+}
+
+.btn-add-commentaire {
+    background-color: #4CAF50; /* Green */
+}
+
+.btn-add-commentaire:hover {
+    background-color: #45a049;
+}
+
+.btn-feuille {
+    background-color: #d6d65b; /* Green */
+}
+
+.btn-feuille:hover {
+    background-color: #b2b24e; /* Green */
 }
 
 .btn-edit {

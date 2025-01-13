@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<?php include '../views/header.php'; ?>
 
 
 <div class="container">
@@ -17,13 +18,13 @@
         
         <!-- Équipes et scores -->
         <div>
-            <label for="equipe1">Équipe 1 :</label>
+            <label for="equipe1">Nom de l'équipe:</label>
             <input 
                 type="text" 
                 name="equipe1" 
                 id="equipe1" 
                 required 
-                placeholder="Nom de l'équipe"
+                placeholder="EX : CF Barcelona"
             >
 
         <!-- Équipe adverse -->
@@ -33,7 +34,7 @@
                 type="text" 
                 name="nom_equipe_adverse" 
                 id="nom_equipe_adverse" 
-                placeholder="Ex: FC Exemple"
+                placeholder="Ex: CF Exemple"
             >
         
         </div>
@@ -87,3 +88,5 @@
 
 </body>
 </html>
+<?php include '../views/footer.php'; ?>
+
