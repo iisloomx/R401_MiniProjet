@@ -106,9 +106,10 @@ class FeuilleMatch {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id_match', $id_match);
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return !empty($results) ? $results : null; 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    
     
     public function obtenirRemplacantsParMatch($id_match) {
         $query = "SELECT j.nom AS nom_joueur, j.prenom AS prenom_joueur, p.role, p.poste, j.numero_licence
@@ -147,6 +148,17 @@ class FeuilleMatch {
         $stmt->bindParam(':id_match', $id_match);
         return $stmt->execute();
     }
+
+
+    public function mettreAJourEtatMatch($id_match, $statut) {
+        $query = "UPDATE `match_` SET etat_feuille = :statut WHERE id_match = :id_match";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':statut', $statut);
+        $stmt->bindParam(':id_match', $id_match);
+        return $stmt->execute();
+    }
+    
+    
     
     
     

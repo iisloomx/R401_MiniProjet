@@ -14,22 +14,13 @@
     <div class="table-container">
         <h1>Liste des Matchs</h1>
         
-        <!-- Buttons to filter matches -->
         <div class="btn-group">
-            <a href="../controllers/MatchsController.php?action=matches_a_venir" class="btn-add-match">
-                Matchs à venir
-            </a>
-            <a href="../controllers/MatchsController.php?action=matches_passes" class="btn-add-match">
-                Matchs passés
-            </a>
+            <a href="../controllers/MatchsController.php?action=matches_a_venir" class="btn-add-match">Matchs à venir</a>
+            <a href="../controllers/MatchsController.php?action=matches_passes" class="btn-add-match">Matchs passés</a>
         </div>
         
-        <!-- Add Match Button -->
-        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">
-            Ajouter un Match
-        </a>
+        <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">Ajouter un Match</a>
         
-        <!-- Match List -->
         <?php if (!empty($matchs)) : ?>
             <table>
                 <thead>
@@ -40,7 +31,8 @@
                         <th>Équipe Adverse</th>
                         <th>Lieu</th>
                         <th>Statut</th>
-                        <th>Résultat</th> <!-- Nouvelle colonne pour le résultat -->
+                        <th>État Feuille</th> <!-- Nouvelle colonne -->
+                        <th>Résultat</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -53,10 +45,8 @@
                             <td><?= htmlspecialchars($match['nom_equipe_adverse']); ?></td>
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
                             <td><?= htmlspecialchars($match['statut']); ?></td>
-                            <td>
-                                <!-- Affichage du résultat uniquement si le match est terminé -->
-                                <?= $match['statut'] === 'Terminé' ? htmlspecialchars($match['resultat']) : 'N/A'; ?>
-                            </td>
+                            <td><?= htmlspecialchars($match['etat_feuille']); ?></td> <!-- Nouvelle colonne -->
+                            <td><?= $match['statut'] === 'Terminé' ? htmlspecialchars($match['resultat']) : 'N/A'; ?></td>
                             <td class="action-buttons">
                                 <a href="../controllers/FeuilleMatchController.php?action=afficher&id_match=<?= $match['id_match']; ?>" class="btn btn-add">Feuille du match</a>
                                 <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">Modifier</a>

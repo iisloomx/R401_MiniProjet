@@ -73,53 +73,6 @@ switch ($action) {
             require '../views/feuilles_matchs/ajouter.php';
             break;
         
-
-    case 'selectionner': 
-            $id_match = $_GET['id_match'] ?? null;
-            if (!$id_match) {
-                echo "ID du match non spécifié.";
-                exit;
-            }
-        
-            $joueurModel = new Joueur($db);
-            $commentaireModel = new Commentaire($db);
-            $participerModel = new Participer($db);
-        
-            $joueursActifs = $joueurModel->obtenirJoueursActifs();
-            $evaluations = [];
-        
-            foreach ($joueursActifs as &$joueur) {
-                // Récupérer le dernier commentaire du joueur
-                $joueur['dernier_commentaire'] = $commentaireModel->obtenirDernierCommentaireParJoueur($joueur['numero_licence'])['texte_commentaire'] ?? 'Pas de commentaire';
-                
-                // Récupérer l'évaluation du joueur pour le match en cours (si elle existe)
-                $evaluation = $participerModel->obtenirSelectionsParMatch($id_match);
-                foreach ($evaluation as $e) {
-                    if ($e['numero_licence'] === $joueur['numero_licence']) {
-                        $joueur['evaluation'] = $e['evaluation'];
-                    }
-                }
-            }
-        
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $selections = $_POST['joueur_selectionnes'] ?? [];
-                foreach ($selections as $selection) {
-                    $data = [
-                        'numero_licence' => $selection['numero_licence'],
-                        'id_match' => $id_match,
-                        'role' => $selection['role'],
-                        'poste' => $selection['poste'],
-                        'evaluation' => null // Set default evaluation
-                    ];
-                    $participerModel->ajouterSelection($data);
-                }
-                
-                header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
-                exit;
-            }
-        
-            require '../views/feuilles_matchs/selectionner.php';
-            break;
                
 
             case 'evaluer':
@@ -377,6 +330,40 @@ switch ($action) {
             exit;
         }
         break;
+
+
+        case 'valider_feuille':
+            $id_match = $_GET['id_match'] ?? null;
+        
+            if (!$id_match) {
+                $_SESSION['error'] = "ID du match non spécifié.";
+                header("Location: FeuilleMatchController.php?action=afficher");
+                exit;
+            }
+        
+            // Vérifier le nombre de titulaires
+            $titulaires = $feuilleMatch->obtenirTitulairesParMatch($id_match);
+        
+            if (count($titulaires) < 11) {
+                $_SESSION['error'] = "La feuille de match ne peut pas être validée : moins de 11 titulaires.";
+                header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+                exit;
+            }
+        
+            // Mettre à jour l'état de la feuille de match
+            $result = $feuilleMatch->mettreAJourEtatMatch($id_match, 'Validé');
+        
+            if ($result) {
+                $_SESSION['success'] = "La feuille de match a été validée avec succès.";
+            } else {
+                $_SESSION['error'] = "Erreur lors de la validation de la feuille de match.";
+            }
+        
+            header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+            exit;
+            break;
+        
+        
     
     default:
         echo "Action non reconnue.";

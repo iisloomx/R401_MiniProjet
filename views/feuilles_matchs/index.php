@@ -1,7 +1,3 @@
-<?php if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-} include '../views/header.php'; ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du Match</title>
     <link rel="stylesheet" href="../views/css/style.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const errorMessage = <?= json_encode($_SESSION['error'] ?? null) ?>;
+            const successMessage = <?= json_encode($_SESSION['success'] ?? null) ?>;
+
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+            if (successMessage) {
+                alert(successMessage);
+                window.location.href = "../controllers/MatchsController.php?action=liste"; // Redirect to matches list
+            }
+        });
+    </script>
+        <a href="../controllers/MatchsController.php?action=liste" class="btn btn-return">
+            Retour à la liste des matchs
+        </a>
 </head>
 <body>
     <div class="match-details">
@@ -27,16 +40,26 @@
 
         <h2>Actions disponibles</h2>
         <div class="actions">
-            <!-- Existing Buttons -->
-            <?php if ($match['statut'] === 'À venir'): ?>
-                <a href="../controllers/FeuilleMatchController.php?action=selectionner&id_match=<?= $match['id_match']; ?>" class="btn btn-select">
-                    Sélectionner les joueurs
+        <?php if ($match['etat_feuille'] === 'Non validé' || $match['statut'] === 'À venir'): ?>
+                <a href="FeuilleMatchController.php?action=valider_feuille&id_match=<?= htmlspecialchars($match['id_match']); ?>" 
+                    class="btn btn-validate">
+                    Valider la Feuille de Match
                 </a>
+            <?php elseif ($match['etat_feuille'] === 'Validé'): ?>
+                <p>La feuille de match est validée, mais vous pouvez toujours la modifier.</p>
             <?php endif; ?>
 
-            <?php if ($match['statut'] === 'Terminé'): ?>
-                <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-evaluate">
-                    Évaluer les joueurs
+            <!-- Actions disponibles, même après validation -->
+            <?php if ($match['statut'] === 'À venir'): ?>
+                <a href="../controllers/FeuilleMatchController.php?action=ajouter&id_match=<?= $match['id_match']; ?>" class="btn btn-add">
+                    Ajouter Joueur
+                </a>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($match['statut'] === 'À venir'): ?>
+                <a href="../controllers/FeuilleMatchController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">
+                    Modifier les Joueurs
                 </a>
             <?php endif; ?>
 
@@ -45,12 +68,18 @@
                 Supprimer Joueurs de la Sélection
             </a>
             <?php endif; ?>
-        </div>
 
+            <?php if ($match['statut'] === 'Terminé'): ?>
+                    <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-evaluate">
+                        Évaluer les joueurs
+                    </a>
+            <?php endif; ?>
+
+
+
+        </div>           
         <h2>Liste des Joueurs pour ce Match</h2>
-        <a href="../controllers/FeuilleMatchController.php?action=ajouter&id_match=<?= $match['id_match']; ?>" class="btn-index-match">Ajouter Joueur</a>
 
-        <!-- Liste des Titulaires -->
         <h3>Titulaires</h3>
         <?php if (empty($titulaires)) : ?>
             <p>Aucun titulaire trouvé.</p>
@@ -75,7 +104,6 @@
             </table>
         <?php endif; ?>
 
-        <!-- Liste des Remplaçants -->
         <h3>Remplaçants</h3>
         <?php if (empty($remplacants)) : ?>
             <p>Aucun remplaçant trouvé.</p>
@@ -99,8 +127,12 @@
                 </tbody>
             </table>
         <?php endif; ?>
-
     </div>
 </body>
 </html>
-<?php include '../views/footer.php'; ?>
+<?php 
+// Nettoyage des messages après affichage
+unset($_SESSION['error']);
+unset($_SESSION['success']);
+include '../views/footer.php'; 
+?>

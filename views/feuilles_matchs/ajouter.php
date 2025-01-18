@@ -10,6 +10,29 @@ include '../views/header.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Joueur à la Feuille de Match</title>
     <link rel="stylesheet" href="../views/css/style.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const playerSelect = document.getElementById("numero_licence");
+            const playerDetails = document.getElementById("player-details");
+
+            // Player data from PHP
+            const playerData = <?= json_encode($joueursNonSelectionnes) ?>;
+
+            playerSelect.addEventListener("change", () => {
+                const selectedPlayer = playerData.find(player => player.numero_licence === playerSelect.value);
+
+                if (selectedPlayer) {
+                    playerDetails.innerHTML = `
+                        <p><strong>Taille :</strong> ${selectedPlayer.taille ?? 'N/A'} cm</p>
+                        <p><strong>Poids :</strong> ${selectedPlayer.poids ?? 'N/A'} kg</p>
+                        <p><strong>Dernier Commentaire :</strong> ${selectedPlayer.commentaire ?? 'Pas de commentaire'}</p>
+                    `;
+                } else {
+                    playerDetails.innerHTML = "<p>Sélectionnez un joueur pour voir les détails.</p>";
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -37,6 +60,11 @@ include '../views/header.php'; ?>
                     </option>
                 <?php endforeach; ?>
             </select>
+        </div>
+
+        <!-- Afficher les détails du joueur -->
+        <div id="player-details" style="margin-top: 15px;">
+            <p>Sélectionnez un joueur pour voir les détails.</p>
         </div>
 
         <!-- Rôle du joueur -->
@@ -69,7 +97,6 @@ include '../views/header.php'; ?>
                 <option value="Second Attaquant">Second Attaquant</option>
             </select>
         </div>
-
 
         <!-- Bouton de soumission -->
         <button type="submit">Ajouter à la Feuille de Match</button>
