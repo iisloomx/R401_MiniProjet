@@ -1,97 +1,387 @@
 <?php
-require_once '../config/database.php';
-require_once '../models/Participer.php';
-require_once '../models/Joueur.php';
-require_once '../models/Match.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}require_once '../config/database.php';
+require_once '../models/FeuilleMatch.php';
+require_once '../models/Match.php'; // Inclure le modèle Match
+require_once '../models/Joueur.php'; // Inclure le modèle Joueur
 require_once '../models/Commentaire.php';
-
+require_once '../models/Participer.php';
 $database = new Database();
 $db = $database->getConnection();
-$participer = new Participer($db);
-$gameMatch = new GameMatch($db);
-$joueur = new Joueur($db);
-$commentaire = new Commentaire($db);
+$feuilleMatch = new FeuilleMatch($db);
 
-
-$action = $_GET['action'] ?? 'selectionner';
+$action = $_GET['action'] ?? 'afficher';
 
 switch ($action) {
-    case 'selectionner':
+
+    case 'afficher':
         $id_match = $_GET['id_match'] ?? null;
         if (!$id_match) {
             echo "ID du match non spécifié.";
             exit;
         }
+        
+        $gameMatch = new GameMatch($db);
+        $match = $gameMatch->obtenirMatch($id_match);
+    
+        $titulaires = $feuilleMatch->obtenirTitulairesParMatch($id_match);
+        $remplacants = $feuilleMatch->obtenirRemplacantsParMatch($id_match);
+        
+        require '../views/feuilles_matchs/index.php';
+        break;
+    
+        
+        $gameMatch = new GameMatch($db);
+        $match = $gameMatch->obtenirMatch($id_match);
+        $participe = $feuilleMatch->obtenirJoueursParMatch($id_match);
+        
+        require '../views/feuilles_matchs/index.php';
+        break;
 
-        // Get the match details (date and time)
-        $matchDetails = $gameMatch->obtenirMatch($id_match);
-        $matchDateTime = $matchDetails['date_match'] . ' ' . $matchDetails['heure_match'];
+        case 'ajouter':
+            $id_match = $_GET['id_match'] ?? null;
+        
+            if (!$id_match) {
+                echo "ID du match non spécifié.";
+                exit;
+            }
+        
+            $gameMatch = new GameMatch($db);
+            $match = $gameMatch->obtenirMatch($id_match);
+        
+            // Obtenir les joueurs non sélectionnés
+            $joueursNonSelectionnes = $feuilleMatch->obtenirJoueursNonSelectionnes($id_match);
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = [
+                    'numero_licence' => $_POST['numero_licence'],
+                    'id_match' => $_POST['id_match'],
+                    'role' => $_POST['role'],
+                    'poste' => $_POST['poste']
+                ];
+        
+                try {
+                    $feuilleMatch->ajouterJoueur($data);
+                    header("Location: FeuilleMatchController.php?action=afficher&id_match=" . $_POST['id_match']);
+                    exit();
+                } catch (Exception $e) {
+                    echo "Erreur : " . $e->getMessage();
+                }
+            }
+        
+            require '../views/feuilles_matchs/ajouter.php';
+            break;
+        
 
-        // Check if the match is in the future or past
-        $isMatchInTheFuture = strtotime($matchDateTime) > time();
+    case 'selectionner': 
+            $id_match = $_GET['id_match'] ?? null;
+            if (!$id_match) {
+                echo "ID du match non spécifié.";
+                exit;
+            }
+        
+            $joueurModel = new Joueur($db);
+            $commentaireModel = new Commentaire($db);
+            $participerModel = new Participer($db);
+        
+            $joueursActifs = $joueurModel->obtenirJoueursActifs();
+            $evaluations = [];
+        
+            foreach ($joueursActifs as &$joueur) {
+                // Récupérer le dernier commentaire du joueur
+                $joueur['dernier_commentaire'] = $commentaireModel->obtenirDernierCommentaireParJoueur($joueur['numero_licence'])['texte_commentaire'] ?? 'Pas de commentaire';
+                
+                // Récupérer l'évaluation du joueur pour le match en cours (si elle existe)
+                $evaluation = $participerModel->obtenirSelectionsParMatch($id_match);
+                foreach ($evaluation as $e) {
+                    if ($e['numero_licence'] === $joueur['numero_licence']) {
+                        $joueur['evaluation'] = $e['evaluation'];
+                    }
+                }
+            }
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $selections = $_POST['joueur_selectionnes'] ?? [];
+                foreach ($selections as $selection) {
+                    $data = [
+                        'numero_licence' => $selection['numero_licence'],
+                        'id_match' => $id_match,
+                        'role' => $selection['role'],
+                        'poste' => $selection['poste'],
+                        'evaluation' => null // Set default evaluation
+                    ];
+                    $participerModel->ajouterSelection($data);
+                }
+                
+                header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+                exit;
+            }
+        
+            require '../views/feuilles_matchs/selectionner.php';
+            break;
+               
 
-        // Get the active players
-        $joueursActifs = $joueur->obtenirJoueursActifs();
+            case 'evaluer':
+                $id_match = $_GET['id_match'] ?? null;
+            
+                if (!$id_match) {
+                    echo "ID du match non spécifié.";
+                    exit;
+                }
+            
+                // Fetch players associated with the match
+                $participe = $feuilleMatch->obtenirJoueursParMatch($id_match);
+            
+                // Pass `id_match` and `participe` to the view
+                require '../views/feuilles_matchs/evaluer.php';
+                break;
+            
+            
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($isMatchInTheFuture) {
-                // Comptez les titulaires
-                $titulaireCount = 0;
-                foreach ($_POST['joueurs'] as $data) {
-                    if ($data['role'] === 'Titulaire') {
-                        $titulaireCount++;
+                case 'valider_evaluation':
+                    $id_match = $_GET['id_match'] ?? null;
+                
+                    if (!$id_match) {
+                        $_SESSION['error'] = "ID du match non spécifié.";
+                        header("Location: FeuilleMatchController.php?action=evaluer&id_match=$id_match");
+                        exit;
+                    }
+                
+                    $evaluations = $_POST['evaluations'] ?? [];
+                
+                    if (empty($evaluations)) {
+                        $_SESSION['error'] = "Aucune évaluation soumise.";
+                        header("Location: FeuilleMatchController.php?action=evaluer&id_match=$id_match");
+                        exit;
+                    }
+                
+                    try {
+                        foreach ($evaluations as $id => $evaluation) {
+                            $feuilleMatch->evaluerJoueur([
+                                'id' => $id,
+                                'evaluation' => $evaluation,
+                                'id_match' => $id_match
+                            ]);
+                        }
+                
+                        $_SESSION['success'] = "Évaluations enregistrées avec succès.";
+                        header("Location: FeuilleMatchController.php?action=afficher&id_match=$id_match");
+                        exit;
+                    } catch (Exception $e) {
+                        $_SESSION['error'] = "Erreur lors de l'enregistrement des évaluations : " . $e->getMessage();
+                        header("Location: FeuilleMatchController.php?action=evaluer&id_match=$id_match");
+                        exit;
+                    }
+                
+
+        case 'modifier':
+            $id_match = $_GET['id_match'] ?? null;
+        
+            if (!$id_match) {
+                echo "ID du match non spécifié.";
+                exit;
+            }
+        
+            // Récupérer les joueurs actuels (titulaires et remplaçants)
+            $titulaires = $feuilleMatch->obtenirTitulairesParMatch($id_match) ?? [];
+            $remplacants = $feuilleMatch->obtenirRemplacantsParMatch($id_match) ?? [];
+        
+            // Charger la vue de modification
+            require '../views/feuilles_matchs/modifier.php';
+            break;
+        
+        case 'valider_modification':
+            $id_match = $_POST['id_match'] ?? null;
+        
+            if (!$id_match) {
+                $_SESSION['error'] = "ID du match manquant.";
+                header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
+                exit;
+            }
+        
+            // Récupérer les sélections soumises
+            $selections = $_POST['joueur_selectionnes'] ?? [];
+        
+            try {
+                foreach ($selections as $selection) {
+                    if (!empty($selection['numero_licence']) && !empty($selection['role']) && !empty($selection['poste'])) {
+                        $feuilleMatch->modifierSelection([
+                            'numero_licence' => $selection['numero_licence'],
+                            'id_match' => $id_match,
+                            'role' => $selection['role'],
+                            'poste' => $selection['poste']
+                        ]);
                     }
                 }
         
-                // Vérifiez si le nombre de titulaires est suffisant
-                $minimumPlayers = 11; // Par exemple, pour le football
-                if ($titulaireCount < $minimumPlayers) {
-                    $error = "Le nombre minimum de titulaires est $minimumPlayers.";
-                } else {
-                    foreach ($_POST['joueurs'] as $numero_licence => $data) {
-                        $participer->ajouterSelection([
-                            'numero_licence' => $numero_licence,
-                            'id_match' => $id_match,
-                            'role' => $data['role'],
-                            'poste' => $data['poste'],
-                            'evaluation' => null,
-                        ]);
-                    }
-                    header("Location: FeuilleMatchController.php?action=selectionner&id_match=$id_match");
+                $_SESSION['success'] = "Modifications enregistrées avec succès.";
+                header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+                exit;
+            } catch (Exception $e) {
+                $_SESSION['error'] = "Erreur lors de l'enregistrement : " . $e->getMessage();
+                header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
+                exit;
+            }
+        
+                 
+
+            case 'supprimer':
+                $id_match = $_GET['id_match'] ?? null;
+            
+                if (!$id_match) {
+                    $_SESSION['error'] = "ID du match non spécifié.";
+                    header("Location: FeuilleMatchController.php?action=afficher");
                     exit();
                 }
+            
+                // Fetch players
+                $titulaires = $feuilleMatch->obtenirTitulairesParMatch($id_match) ?? [];
+                $remplacants = $feuilleMatch->obtenirRemplacantsParMatch($id_match) ?? [];
+            
+                // Load suppression view
+                require '../views/feuilles_matchs/supprimer.php';
+                break;
+            
+            case 'valider_suppression':
+                $id_match = $_GET['id_match'] ?? null;
+            
+                if (!$id_match) {
+                    $_SESSION['error'] = "ID du match non spécifié.";
+                    header("Location: FeuilleMatchController.php?action=afficher");
+                    exit();
+                }
+            
+                $joueursASupprimer = $_POST['joueur_a_supprimer'] ?? [];
+            
+                if (empty($joueursASupprimer)) {
+                    $_SESSION['error'] = "Aucun joueur sélectionné pour suppression.";
+                    header("Location: FeuilleMatchController.php?action=supprimer&id_match={$id_match}");
+                    exit();
+                }
+            
+                try {
+                    foreach ($joueursASupprimer as $joueur) {
+                        $numeroLicence = $joueur['numero_licence'];
+                        $feuilleMatch->supprimerJoueurParLicenceEtMatch($numeroLicence, $id_match);
+                    }
+                    $_SESSION['success'] = "Les joueurs sélectionnés ont été supprimés avec succès.";
+                } catch (Exception $e) {
+                    $_SESSION['error'] = "Erreur lors de la suppression : " . $e->getMessage();
+                }
+            
+                header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+                exit();
+            
+
+    case 'valider_selection':
+        $id_match = $_GET['id_match'] ?? null;
+
+        if (!$id_match) {
+            echo "ID du match non spécifié.";
+            exit;
+        }
+
+        $selections = $_POST['joueur_selectionnes'] ?? [];
+
+        // Validate selections and count titulaires
+        $titularCount = 0;
+        $joueursValides = array_filter($selections, function ($selection) use (&$titularCount) {
+            if (!empty($selection['numero_licence']) && !empty($selection['role']) && !empty($selection['poste'])) {
+                if ($selection['role'] === 'Titulaire') {
+                    $titularCount++;
+                }
+                return true;
+            }
+            return false;
+        });
+
+        if ($titularCount < 11) {
+            // Save the selections to the session
+            $_SESSION['previous_selections'] = $selections;
+
+            // Redirect back with an error
+            header("Location: FeuilleMatchController.php?action=selectionner&id_match={$id_match}&error=not_enough_titulaires");
+            exit;
+        }
+
+        // Save valid selections to the database
+        require_once '../models/Participer.php';
+        $participerModel = new Participer($db);
+
+        try {
+            foreach ($joueursValides as $selection) {
+                $data = [
+                    'numero_licence' => $selection['numero_licence'],
+                    'id_match' => $id_match,
+                    'role' => $selection['role'],
+                    'poste' => $selection['poste'],
+                    'evaluation' => null
+                ];
+                $participerModel->ajouterSelection($data);
+            }
+
+            // Clear the session after successful submission
+            unset($_SESSION['previous_selections']);
+
+            header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+            exit;
+        } catch (Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+        break;
+
+        
+    case 'valider_modification':
+        $id_match = $_GET['id_match'] ?? null;
+    
+        if (!$id_match) {
+            echo "ID du match non spécifié.";
+            exit;
+        }
+    
+        $selections = $_POST['joueur_selectionnes'] ?? [];
+    
+        // Compter le nombre de titulaires
+        $titularCount = 0;
+        foreach ($selections as $selection) {
+            if ($selection['role'] === 'Titulaire') {
+                $titularCount++;
             }
         }
-
-        // Get the existing selections for the match
-        $selections = $participer->obtenirSelectionsParMatch($id_match);
-
-        // Pass whether the match is in the future to the view
-        require '../views/selection/selectionner.php';
-        break;
-
-    case 'modifier_evaluation':
-        $id = $_GET['id'] ?? null;
-        $evaluation = $_GET['evaluation'] ?? null;
-
-        if ($id && $evaluation !== null) {
-            $participer->mettreAJourEvaluation($id, $evaluation);
-            header("Location: FeuilleMatchController.php?action=selectionner&id_match=$_GET[id_match]");
-            exit();
+    
+        // Vérifier qu'il y a au moins 11 titulaires
+        if ($titularCount < 11) {
+            $_SESSION['error'] = "Vous devez sélectionner au moins 11 titulaires pour valider la sélection.";
+            header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
+            exit;
+        }
+    
+        // Appliquer les modifications si la validation est réussie
+        try {
+            foreach ($selections as $selection) {
+                $data = [
+                    'numero_licence' => $selection['numero_licence'],
+                    'id_match' => $id_match,
+                    'role' => $selection['role'],
+                    'poste' => $selection['poste']
+                ];
+                $feuilleMatch->modifierSelection($data);
+            }
+            $_SESSION['success'] = "La sélection a été modifiée avec succès.";
+            header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+            exit;
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Erreur lors de la modification : " . $e->getMessage();
+            header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
+            exit;
         }
         break;
-
-    case 'supprimer':
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $participer->supprimerSelection($id);
-            header("Location: FeuilleMatchController.php?action=selectionner&id_match=$_GET[id_match]");
-            exit();
-        }
-        break;
-
+    
     default:
-        echo "Action non supportée.";
+        echo "Action non reconnue.";
         break;
 }
+
+
 ?>

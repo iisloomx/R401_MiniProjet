@@ -1,5 +1,7 @@
 <?php
-require_once '../config/database.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}require_once '../config/database.php';
 require_once '../models/Utilisateur.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

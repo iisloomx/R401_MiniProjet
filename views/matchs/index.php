@@ -1,6 +1,7 @@
-<?php include '../views/header.php'; ?>
+<?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} include '../views/header.php'; ?>
 
-<!-- views/matchs/index.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,7 +39,8 @@
                         <th>Heure</th>
                         <th>Équipe Adverse</th>
                         <th>Lieu</th>
-                        <th>Résultat</th>
+                        <th>Statut</th>
+                        <th>Résultat</th> <!-- Nouvelle colonne pour le résultat -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -50,9 +52,13 @@
                             <td><?= htmlspecialchars($match['heure_match']); ?></td>
                             <td><?= htmlspecialchars($match['nom_equipe_adverse']); ?></td>
                             <td><?= htmlspecialchars($match['lieu_de_rencontre']); ?></td>
-                            <td><?= htmlspecialchars($match['resultat']); ?></td>
+                            <td><?= htmlspecialchars($match['statut']); ?></td>
+                            <td>
+                                <!-- Affichage du résultat uniquement si le match est terminé -->
+                                <?= $match['statut'] === 'Terminé' ? htmlspecialchars($match['resultat']) : 'N/A'; ?>
+                            </td>
                             <td class="action-buttons">
-                                <a href="../controllers/FeuilleMatchController.php?action=selectionner&id_match=<?= $match['id_match']; ?>" class="btn btn-add">Feuille du match</a>
+                                <a href="../controllers/FeuilleMatchController.php?action=afficher&id_match=<?= $match['id_match']; ?>" class="btn btn-add">Feuille du match</a>
                                 <a href="../controllers/MatchsController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">Modifier</a>
                                 <a href="../controllers/MatchsController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">Supprimer</a>
                             </td>
@@ -64,9 +70,6 @@
             <p class="no-data">Aucun match trouvé.</p>
         <?php endif; ?>
     </div>
-
-    
 </body>
 </html>
 <?php include '../views/footer.php'; ?>
-

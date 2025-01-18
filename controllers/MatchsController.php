@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../config/database.php';
 require_once '../models/Match.php';
 
@@ -21,7 +24,6 @@ switch ($action) {
                 'heure_match' => $_POST['heure_match'],
                 'nom_equipe_adverse' => $_POST['nom_equipe_adverse'],
                 'lieu_de_rencontre' => $_POST['lieu_de_rencontre'],
-                'resultat' => $_POST['resultat']
             ];
             $gameMatch->ajouterMatch($data);
             header("Location: MatchsController.php?action=liste");
@@ -36,42 +38,43 @@ switch ($action) {
             echo "ID du match non spécifié.";
             exit;
         }
-
-        // Get match details
+        
+        // Obtenir les détails du match
         $match = $gameMatch->obtenirMatch($id_match);
-        $matchDateTime = $match['date_match'] . ' ' . $match['heure_match'];
-        $isMatchInThePast = strtotime($matchDateTime) < time(); // Check if the match is in the past
-
+        
+        // Déterminer si le match est dans le passé
+        $isMatchInThePast = $gameMatch->estMatchDansLePasse($id_match);
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Update match details
             $data = [
                 'id_match' => $id_match,
-                'equipe1' => $_POST['equipe1'],
-                'equipe2' => $_POST['equipe2'],
                 'date_match' => $_POST['date_match'],
                 'heure_match' => $_POST['heure_match'],
                 'nom_equipe_adverse' => $_POST['nom_equipe_adverse'],
                 'lieu_de_rencontre' => $_POST['lieu_de_rencontre'],
-                'resultat' => $isMatchInThePast ? $_POST['resultat'] : null // Only update result if the match is past
             ];
 
-            // Update the match in the database
+            if ($isMatchInThePast) {
+                $data['resultat'] = $_POST['resultat'] ?? null; // Ajouter le résultat si disponible
+            }
+        
             $gameMatch->mettreAJourMatch($data);
             header("Location: MatchsController.php?action=liste");
             exit();
         }
-
-        // Pass whether the match is in the past to the view
+        
+        // Inclure la vue
         require '../views/matchs/modifier.php';
         break;
+        
 
     case 'matches_a_venir':
-        $matchs = $gameMatch->obtenirMatchsAVenir();
+        $matchs = $gameMatch->obtenirMatchsParStatut('À venir');
         require '../views/matchs/index.php';
         break;
 
     case 'matches_passes':
-        $matchs = $gameMatch->obtenirMatchsPasses();
+        $matchs = $gameMatch->obtenirMatchsParStatut('Terminé');
         require '../views/matchs/index.php';
         break;
 

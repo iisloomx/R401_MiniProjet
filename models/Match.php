@@ -15,46 +15,18 @@ class GameMatch {
     }
 
     public function ajouterMatch($data) {
-        $query = "INSERT INTO " . $this->table . " (date_match, heure_match, nom_equipe_adverse, lieu_de_rencontre, resultat) 
-                  VALUES (:date_match, :heure_match, :nom_equipe_adverse, :lieu_de_rencontre, :resultat)";
+        $statut = (strtotime($data['date_match'] . ' ' . $data['heure_match']) > time()) ? 'À venir' : 'Terminé';
+
+        $query = "INSERT INTO " . $this->table . " (date_match, heure_match, nom_equipe_adverse, lieu_de_rencontre, statut) 
+                  VALUES (:date_match, :heure_match, :nom_equipe_adverse, :lieu_de_rencontre, :statut)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':date_match', $data['date_match']);
         $stmt->bindParam(':heure_match', $data['heure_match']);
         $stmt->bindParam(':nom_equipe_adverse', $data['nom_equipe_adverse']);
         $stmt->bindParam(':lieu_de_rencontre', $data['lieu_de_rencontre']);
-        $stmt->bindParam(':resultat', $data['resultat']);
+        $stmt->bindParam(':statut', $statut);
 
-        return $stmt->execute();
-    }
-
-    /**
-     * Récupère les matchs futurs
-     */
-    public function obtenirMatchsAVenir() {
-        $query = "SELECT * FROM " . $this->table . " WHERE date_match > NOW()";  
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Récupère les matchs passés
-     */
-    public function obtenirMatchsPasses() {
-        $query = "SELECT * FROM " . $this->table . " WHERE date_match < NOW()"; 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Supprime un match par son ID
-     */
-    public function supprimerMatch($id_match) {
-        $query = "DELETE FROM " . $this->table . " WHERE id_match = :id_match";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id_match', $id_match);
         return $stmt->execute();
     }
 
@@ -66,24 +38,71 @@ class GameMatch {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
     public function mettreAJourMatch($data) {
+        $statut = (strtotime($data['date_match'] . ' ' . $data['heure_match']) > time()) ? 'À venir' : 'Terminé';
+    
         $query = "UPDATE " . $this->table . " 
                   SET date_match = :date_match, 
                       heure_match = :heure_match, 
                       nom_equipe_adverse = :nom_equipe_adverse, 
                       lieu_de_rencontre = :lieu_de_rencontre, 
-                      resultat = :resultat 
-                  WHERE id_match = :id_match";
+                      statut = :statut";
+        
+        if (isset($data['resultat'])) {
+            $query .= ", resultat = :resultat";
+        }
+        
+        $query .= " WHERE id_match = :id_match";
+    
         $stmt = $this->conn->prepare($query);
-
+    
         $stmt->bindParam(':date_match', $data['date_match']);
         $stmt->bindParam(':heure_match', $data['heure_match']);
         $stmt->bindParam(':nom_equipe_adverse', $data['nom_equipe_adverse']);
         $stmt->bindParam(':lieu_de_rencontre', $data['lieu_de_rencontre']);
-        $stmt->bindParam(':resultat', $data['resultat']);
+        $stmt->bindParam(':statut', $statut);
         $stmt->bindParam(':id_match', $data['id_match']);
-
+    
+        if (isset($data['resultat'])) {
+            $stmt->bindParam(':resultat', $data['resultat']);
+        }
+    
         return $stmt->execute();
     }
+    
+
+    public function obtenirMatchsParStatut($statut) {
+        $query = "SELECT * FROM " . $this->table . " WHERE statut = :statut";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':statut', $statut);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function supprimerMatch($id_match) {
+        $query = "DELETE FROM " . $this->table . " WHERE id_match = :id_match";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id_match', $id_match);
+        return $stmt->execute();
+    }
+
+    public function estMatchDansLePasse($id_match) {
+        $query = "SELECT date_match, heure_match FROM " . $this->table . " WHERE id_match = :id_match";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id_match', $id_match);
+        $stmt->execute();
+    
+        $match = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($match) {
+            $matchDateTime = $match['date_match'] . ' ' . $match['heure_match'];
+            return strtotime($matchDateTime) < time(); // Retourne `true` si la date/heure est passée
+        }
+    
+        return null; // Retourne null si le match n'est pas trouvé
+    }
+    
+  
 }
 ?>
