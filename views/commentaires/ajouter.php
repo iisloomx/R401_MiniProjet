@@ -1,4 +1,4 @@
-<?php include '../views/header.php'; ?>
+<?php session_start(); include '../views/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">

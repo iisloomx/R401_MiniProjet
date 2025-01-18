@@ -1,4 +1,7 @@
-<?php include '../views/header.php'; ?>
+<?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} include '../views/header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,20 +19,9 @@
 <div class="container">
     <h1>Ajouter un Match</h1>
     <form action="MatchsController.php?action=ajouter" method="POST">
-        
-        <!-- Équipes et scores -->
-        <div>
-            <label for="equipe1">Nom de l'équipe:</label>
-            <input 
-                type="text" 
-                name="equipe1" 
-                id="equipe1" 
-                required 
-                placeholder="EX : CF Barcelona"
-            >
-
+   
         <!-- Équipe adverse -->
-        
+        <div>
             <label for="nom_equipe_adverse">Nom de l'équipe adverse :</label>
             <input 
                 type="text" 
@@ -60,7 +52,6 @@
         </div>
         
 
-
         <!-- Lieu de rencontre (domicile ou extérieur) -->
         <div>
             <label for="lieu_de_rencontre">Lieu de la rencontre :</label>
@@ -70,17 +61,6 @@
                 <option value="Extérieur">Extérieur</option>
             </select>
         </div>
-
-        <!-- Résultat global du match (facultatif)
-        <div>
-            <label for="resultat">Résultat :</label>
-            <input 
-                type="text" 
-                name="resultat" 
-                id="resultat" 
-                placeholder="Exemple : 3-2, Victoire, etc."
-            >
-        </div> -->
         
         <!-- Bouton de soumission -->
         <button type="submit">Ajouter</button>
