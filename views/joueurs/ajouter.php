@@ -1,3 +1,4 @@
+<?php include '../views/header.php'; ?>
 
 <!DOCTYPE html>
 <html>
@@ -43,3 +44,5 @@
     </form>
 </body>
 </html>
+<?php include '../views/footer.php'; ?>
+

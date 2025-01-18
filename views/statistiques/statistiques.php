@@ -1,3 +1,5 @@
+<?php include '../views/header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -64,3 +66,4 @@
     </div>
 </body>
 </html>
+<?php include '../views/footer.php'; ?>

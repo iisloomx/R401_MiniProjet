@@ -1,3 +1,4 @@
+<?php include '../views/header.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
