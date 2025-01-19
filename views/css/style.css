@@ -541,3 +541,16 @@ form button:hover {
 }
 
 }
+
+.btn-edit {
+    background-color: #3498db; /* Blue */
+}
+
+.btn-delete {
+    background-color: #e74c3c; /* Red */
+}
+
+/* orange */
+.btn-back {
+    background-color: #e49f13;
+}

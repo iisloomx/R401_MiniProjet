@@ -26,7 +26,7 @@ include 'header.php';
 
     <!-- Lien pour créer un compte -->
     <p class="create-account-container">
-        Pas encore de compte ? <a href="inscription.php" class="btn btn-create-comptecreate-account-link">Créer un compte</a>
+        Pas encore de compte ? <a href="inscription.php" class="btn-create-comptecreate-account-link">Créer un compte</a>
     </p>
 </div>
 
