@@ -1,72 +1,20 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
+<?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Vérifier que l'ID de l'utilisateur est bien présent dans la session
-if (!isset($_SESSION['id_utilisateur'])) {
-    // Si l'ID n'est pas défini, rediriger l'utilisateur vers la page de connexion
-    header('Location: connexion.php');
-    exit();
-}
-
-// Inclure le fichier de connexion DB et la classe Utilisateur
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/Utilisateur.php';
-
-// Créer la connexion PDO
-$database = new Database();
-$db = $database->getConnection();
-
-// Créer l'instance du modèle Utilisateur
-$utilisateurModel = new Utilisateur($db);
-
-// Récupérer l'utilisateur par son ID stocké en session
-$id_utilisateur = (int) $_SESSION['id_utilisateur']; // on force en int pour éviter toute injection
-$user = $utilisateurModel->getUtilisateurParId($id_utilisateur);
-
-// Gérer la soumission du formulaire de changement de mot de passe
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $current_password = $_POST['current_password'] ?? '';
-    $new_password = $_POST['new_password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
-
-    // Validate the current password
-    if (!$utilisateurModel->verifierUtilisateur($user['nom_utilisateur'], $current_password)) {
-        $error = "Le mot de passe actuel est incorrect.";
-    } elseif ($new_password !== $confirm_password) {
-        $error = "Les mots de passe ne correspondent pas.";
-    } elseif (strlen($new_password) < 6) {
-        $error = "Le mot de passe doit contenir au moins 6 caractères.";
-    } else {
-        // Hash the new password and update it
-        $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
-        $update_success = $utilisateurModel->updatePassword($id_utilisateur, $hashed_password);
-
-        if ($update_success) {
-            $success = "Mot de passe changé avec succès.";
-        } else {
-            $error = "Erreur lors de la mise à jour du mot de passe.";
-        }
-    }
-}
-
-// Inclure le header
-require_once 'header.php';
-?>
+include '../views/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Mon Compte</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="views/css/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Mon Compte</h1>
 
-        <?php if ($user && isset($user['id_utilisateur'])): ?>
+        <?php if (!empty($user)): ?>
             <p><strong>Nom d’utilisateur :</strong> <?= htmlspecialchars($user['nom_utilisateur'], ENT_QUOTES, 'UTF-8') ?></p>
 
             <!-- Formulaire de changement de mot de passe -->
@@ -78,7 +26,7 @@ require_once 'header.php';
                 <p class="success-message"><?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?></p>
             <?php endif; ?>
 
-            <form action="" method="post" onsubmit="return confirmPasswordChange();">
+            <form action="../controllers/MonCompteController.php?action=updatePassword" method="post" onsubmit="return confirmPasswordChange();">
                 <div class="form-group">
                     <label for="current_password">Mot de passe actuel :</label>
                     <input type="password" name="current_password" id="current_password" required>
@@ -94,7 +42,6 @@ require_once 'header.php';
                 </div>
                 <button type="submit" class="btn btn-primary">Changer le mot de passe</button>
             </form>
-
         <?php else: ?>
             <p>Aucune information disponible pour l’utilisateur.</p>
         <?php endif; ?>
@@ -105,7 +52,6 @@ require_once 'header.php';
     </div>
     <script>
     function confirmPasswordChange() {
-        // Display a confirmation dialog
         return confirm("Êtes-vous sûr de vouloir changer votre mot de passe ?");
     }
     </script>

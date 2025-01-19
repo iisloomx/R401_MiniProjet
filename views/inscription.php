@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
-    <link rel="stylesheet" href="/MiniprojetR3.01/views/css/style.css">
+    <link rel="stylesheet" href="views/css/style.css">
 </head>
 <body>
-    <div class="form-container">
+    <div class="container">
         <h2>Créer un Compte</h2>
         <?php if (isset($erreur)) : ?>
             <p class="error-message"><?= htmlspecialchars($erreur) ?></p>
@@ -21,6 +21,8 @@
             <input type="password" name="mot_de_passe" id="mot_de_passe" required>
 
             <button type="submit">Créer le Compte</button>
+            <a href="../controllers/ConnexionController.php" class="btn btn-back">Retour</a>
+
         </form>
     </div>
 </body>

@@ -1,3 +1,4 @@
 <?php
-header("Location: views/connexion.php");
+header("Location: controllers/ConnexionController.php");
 exit();
+?>

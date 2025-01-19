@@ -1,2 +1,0 @@
-Things to add :
--button retour pour les pages necessaires (not done)

@@ -1,0 +1,248 @@
+Style global pour le corps */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+}
+
+/* Header principal */
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #cf700b;
+    padding: 10px 20px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(216, 117, 12, 0.1);
+}
+
+/* Logo dans le header */ 
+ .logo img {
+    height: 50px;
+    width: auto;
+} 
+
+/* Liens de navigation dans le header */
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Page Titles */
+.container h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- AJOUT : Style du bouton "Ajouter un Match" --- */
+.btn-index-match {
+    display: inline-block;
+    background-color: #4CAF50; 
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0 auto 20px auto; /* Espace en bas + centrage si besoin */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-index-match:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Pour forcer la couleur même si lien "visité" */
+.btn-index-match:visited {
+    color: #fff;
+}
+
+/* Forms */
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form input[type="password"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus,
+form input[type="password"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4CAF50;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.btn-account:hover {
+    background-color: #45a049;
+}
+
+.btn-logout {
+    background: none;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.btn-logout:hover {
+    color: #ddd;
+}
+
+/* Conteneur pour la table */
+.table-container {
+    max-width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la table */
+.table-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Lien Ajouter un Match */
+.add-match {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.add-match:hover {
+    text-decoration: underline;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+table th,
+table td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4a261;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Actions */
+.action-buttons a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.action-buttons .edit {
+    color: #4CAF50;
+}
+
+.action-buttons .delete {
+    color: #e74c3c;
+}
+
+.action-buttons a:hover {
+    text-decoration: underline;
+}
+
+/* Message Aucun Match Trouvé */
+.no-data {
+    text-align: center;
+    color: #555;
+    font-style: italic;
+    padding: 10px;
+}
+
+/* Footer principal */
+.main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cf700b;
+    padding: 10px 20px;
+    color: #fff;
+    height: 50px;
+    margin-top: 20px;
+}
+
+/* Footer links */
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
