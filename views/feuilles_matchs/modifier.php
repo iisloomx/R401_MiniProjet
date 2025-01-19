@@ -27,11 +27,10 @@ include '../views/header.php'; ?>
             const posteField = document.getElementById(`poste_${index}`);
             const isEnabled = checkbox.checked;
 
-            // Enable/disable associated fields
+            // Enable/disable les champs
             roleField.disabled = !isEnabled;
             posteField.disabled = !isEnabled;
 
-            // Add/remove the required attribute
             if (!isEnabled) {
                 roleField.removeAttribute('required');
                 posteField.removeAttribute('required');
@@ -44,7 +43,7 @@ include '../views/header.php'; ?>
 </head>
 
 <body>
-    <!-- Error message -->
+    <!-- Messages d'erreur -->
     <?php if (!empty($_SESSION['error'])): ?>
         <div class="error-message">
             <?= htmlspecialchars($_SESSION['error']); ?>

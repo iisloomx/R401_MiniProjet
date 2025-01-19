@@ -66,7 +66,7 @@ include '../views/header.php'; ?>
 
         <!-- Bouton retour -->
         <div class="return-button">
-            <a href="StatistiquesController.php?action=index" class="btn btn-stat">Retour aux Statistiques</a>
+            <a href="StatistiquesController.php?action=index" class="btn btn-back">Retour</a>
         </div>
     </div>
 </body>

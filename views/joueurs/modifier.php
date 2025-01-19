@@ -30,18 +30,24 @@
             <input type="number" name="poids" id="poids" value="<?= htmlspecialchars($joueur_info['poids']); ?>" required><br>
 
             <label>Statut :</label><br>
-            <input type="radio" id="actif" name="statut" value="Actif" <?= $joueur_info['statut'] === 'Actif' ? 'checked' : ''; ?>>
-            <label for="actif">Actif</label><br>
-
-            <input type="radio" id="blesse" name="statut" value="Blessé" <?= $joueur_info['statut'] === 'Blessé' ? 'checked' : ''; ?>>
-            <label for="blesse">Blessé</label><br>
-
-            <input type="radio" id="suspendu" name="statut" value="Suspendu" <?= $joueur_info['statut'] === 'Suspendu' ? 'checked' : ''; ?>>
-            <label for="suspendu">Suspendu</label><br>
-
-            <input type="radio" id="absent" name="statut" value="Absent" <?= $joueur_info['statut'] === 'Absent' ? 'checked' : ''; ?>>
-            <label for="absent">Absent</label><br>
-
+            <div style="display: flex; gap: 20px; align-items: center;">
+            <div>
+                <input type="radio" id="actif" name="statut" value="Actif" <?= $joueur_info['statut'] === 'Actif' ? 'checked' : ''; ?>>
+                <label for="actif">Actif</label>
+            </div>
+            <div>
+                <input type="radio" id="blesse" name="statut" value="Blessé" <?= $joueur_info['statut'] === 'Blessé' ? 'checked' : ''; ?>>
+                <label for="blesse">Blessé</label>
+            </div>
+            <div>
+                <input type="radio" id="suspendu" name="statut" value="Suspendu" <?= $joueur_info['statut'] === 'Suspendu' ? 'checked' : ''; ?>>
+                <label for="suspendu">Suspendu</label>
+            </div>
+            <div>
+                <input type="radio" id="absent" name="statut" value="Absent" <?= $joueur_info['statut'] === 'Absent' ? 'checked' : ''; ?>>
+                <label for="absent">Absent</label>
+            </div>
+        </div>
             <button type="submit">Mettre à jour le Joueur</button>
         </form>
         <a href="../controllers/JoueursController.php?action=liste" class="btn btn-back">Retour</a>

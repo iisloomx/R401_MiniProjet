@@ -1,4 +1,11 @@
 <?php
+/**
+ * Contrôleur de connexion
+ *
+ * Ce fichier gère le processus d'authentification des utilisateurs.
+ * - Si la méthode est POST : vérifie les informations de connexion fournies.
+ * - Si la méthode est GET ou autre : affiche le formulaire de connexion.
+ */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

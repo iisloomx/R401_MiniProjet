@@ -1,4 +1,23 @@
 <?php
+/**
+ * Contrôleur des matchs
+ *
+ * Ce fichier gère les différentes actions liées à la gestion des matchs, 
+ * telles que l'affichage de la liste des matchs, l'ajout, la modification, 
+ * la suppression, et la consultation des détails d'un match.
+ *
+ * Actions disponibles :
+ * - `liste` : Affiche tous les matchs enregistrés.
+ * - `ajouter` : Permet d'ajouter un nouveau match.
+ * - `modifier` : Permet de modifier les détails d'un match existant. Si le match est dans le passé, certains champs peuvent être gelés.
+ * - `matches_a_venir` : Affiche uniquement les matchs à venir.
+ * - `matches_passes` : Affiche uniquement les matchs déjà terminés.
+ * - `details` : Affiche les informations détaillées pour un match spécifique.
+ * - `supprimer` : Supprime un match spécifique.
+ *
+ * Les actions utilisent les méthodes du modèle `GameMatch` pour interagir avec la base de données.
+ */
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

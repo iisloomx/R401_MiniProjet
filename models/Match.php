@@ -1,14 +1,15 @@
 <?php
+// Modèle Match
 class GameMatch
 {
     private $conn;
-    private $table = "match_"; // Nom correct de la table
+    private $table = "match_"; // Nom de la table
 
     public function __construct($db)
     {
         $this->conn = $db;
     }
-
+    // Récupérer tous les matchs
     public function obtenirTousLesMatchs()
     {
         $query = "SELECT * FROM " . $this->table;
@@ -17,6 +18,7 @@ class GameMatch
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Ajouter un match
     public function ajouterMatch($data)
     {
         $statut = (strtotime($data['date_match'] . ' ' . $data['heure_match']) > time()) ? 'À venir' : 'Terminé';
@@ -34,6 +36,7 @@ class GameMatch
         return $stmt->execute();
     }
 
+    // Récuperer un match
     public function obtenirMatch($id_match)
     {
         $query = "SELECT * FROM " . $this->table . " WHERE id_match = :id_match";
@@ -43,7 +46,7 @@ class GameMatch
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-
+    // MAJ d'un match
     public function mettreAJourMatch($data)
     {
         $statut = (strtotime($data['date_match'] . ' ' . $data['heure_match']) > time()) ? 'À venir' : 'Terminé';
@@ -75,7 +78,7 @@ class GameMatch
         return $stmt->execute();
     }
 
-
+    // Obtenir les matchs par status (A venir ou terminé)
     public function obtenirMatchsParStatut($statut)
     {
         $query = "SELECT * FROM " . $this->table . " WHERE statut = :statut";
@@ -85,6 +88,7 @@ class GameMatch
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Suppression d'un match
     public function supprimerMatch($id_match)
     {
         $query = "DELETE FROM " . $this->table . " WHERE id_match = :id_match";
@@ -93,6 +97,7 @@ class GameMatch
         return $stmt->execute();
     }
 
+    // Vérif si un match est terminé
     public function estMatchDansLePasse($id_match)
     {
         $query = "SELECT date_match, heure_match FROM " . $this->table . " WHERE id_match = :id_match";

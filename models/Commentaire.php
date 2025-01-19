@@ -1,14 +1,14 @@
 <?php
-
+// Modèle Commentaire
 class Commentaire {
     private $conn;
-    private $table = "commentaire";  // Your comment table
+    private $table = "commentaire";  
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Function to add a comment
+    // Ajouter un commentaire
     public function ajouterCommentaire($data) {
         $query = "INSERT INTO " . $this->table . " (sujet_commentaire, texte_commentaire, numero_licence) 
                   VALUES (:sujet_commentaire, :texte_commentaire, :numero_licence)";
@@ -22,7 +22,7 @@ class Commentaire {
         return $stmt->execute();
     }
 
-    // Function to get comments for a player by their license number
+    // Récupérer commentaire pour un joueur donné avec son numero de licence
     public function obtenirCommentairesParJoueur($numero_licence) {
         $query = "SELECT * FROM " . $this->table . " WHERE numero_licence = :numero_licence";
         
@@ -33,19 +33,22 @@ class Commentaire {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    // Obtenir le dérnier commentaire d'un joueur donné
     public function obtenirDernierCommentaireParJoueur($numero_licence) {
-        $query = "SELECT * FROM " . $this->table . " 
+        $query = "SELECT texte_commentaire 
+                  FROM " . $this->table . " 
                   WHERE numero_licence = :numero_licence 
                   ORDER BY id_commentaire DESC 
                   LIMIT 1";
-        
+    
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':numero_licence', $numero_licence);
         $stmt->execute();
     
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Return a single comment
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['texte_commentaire'] ?? 'Pas de commentaire'; 
     }
+    
     
 }
 ?>

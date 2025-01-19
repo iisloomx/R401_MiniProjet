@@ -20,7 +20,8 @@
         </div>
         
         <a href="../controllers/MatchsController.php?action=ajouter" class="btn-add-match">Ajouter un Match</a>
-        
+        <a href="../views/dashboard.php" class="btn btn-back">Retour</a>
+
         <?php if (!empty($matchs)) : ?>
             <table>
                 <thead>

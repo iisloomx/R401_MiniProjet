@@ -1,4 +1,5 @@
 <?php
+// Modèle Participer
 
 class Participer
 {
@@ -46,20 +47,17 @@ class Participer
     // Ajouter un joueur à la sélection pour un match
     public function ajouterSelection($data)
     {
-        // First, check if the player is already selected for the match
         $query = "SELECT * FROM " . $this->table . " WHERE numero_licence = :numero_licence AND id_match = :id_match";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':numero_licence', $data['numero_licence']);
         $stmt->bindParam(':id_match', $data['id_match']);
         $stmt->execute();
 
-        // If a record is found, we don't insert a duplicate
         if ($stmt->rowCount() > 0) {
             throw new Exception("Le joueur est déjà sélectionné pour ce match.");
         }
 
 
-        // If no record is found, proceed with the insertion
         $query = "INSERT INTO " . $this->table . " (numero_licence, id_match, role, poste, evaluation) 
                   VALUES (:numero_licence, :id_match, :role, :poste, :evaluation)";
         $stmt = $this->conn->prepare($query);

@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Contrôleur de la feuille de match
+ *
+ * Ce fichier gère les différentes actions liées à la gestion des feuilles de match,
+ * telles que l'ajout, la modification, la suppression, l'évaluation des joueurs,
+ * et l'affichage des détails d'un match.
+ */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,6 +19,7 @@ require_once '../models/Participer.php';
 $database = new Database();
 $db = $database->getConnection();
 $feuilleMatch = new FeuilleMatch($db);
+$commentaireModel = new Commentaire($db);
 
 $action = $_GET['action'] ?? 'afficher';
 
@@ -54,6 +63,13 @@ switch ($action) {
         // Obtenir les joueurs non sélectionnés
         $joueursNonSelectionnes = $feuilleMatch->obtenirJoueursNonSelectionnes($id_match);
 
+        foreach ($joueursNonSelectionnes as &$joueur) {
+            $joueur['moyenne_evaluation'] = $feuilleMatch->obtenirMoyenneEvaluation($joueur['numero_licence']);
+            $joueur['commentaire'] = $commentaireModel->obtenirDernierCommentaireParJoueur($joueur['numero_licence']); // Adjust this method
+        }
+
+        unset($joueur);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'numero_licence' => $_POST['numero_licence'],
@@ -84,10 +100,10 @@ switch ($action) {
             exit;
         }
 
-        // Fetch players associated with the match
+        // Récupérer les selectionnés joueurs pour le match donné
         $participe = $feuilleMatch->obtenirJoueursParMatch($id_match);
 
-        // Pass `id_match` and `participe` to the view
+
         require '../views/feuilles_matchs/evaluer.php';
         break;
 
@@ -142,10 +158,6 @@ switch ($action) {
         }
 
 
-
-
-
-
     case 'modifier':
         $id_match = $_GET['id_match'] ?? null;
 
@@ -175,11 +187,11 @@ switch ($action) {
             exit();
         }
 
-        // Fetch players
+        // Récupérer les joueurs actuels (titulaires et remplaçants)
         $titulaires = $feuilleMatch->obtenirTitulairesParMatch($id_match) ?? [];
         $remplacants = $feuilleMatch->obtenirRemplacantsParMatch($id_match) ?? [];
 
-        // Load suppression view
+        // Afficher la vue de suppression
         require '../views/feuilles_matchs/supprimer.php';
         break;
 
@@ -271,7 +283,7 @@ switch ($action) {
         $id_match = $_GET['id_match'] ?? null;
 
         if (!$id_match) {
-            echo "ID du match non spécifié.";
+            echo "<script>alert('ID du match non spécifié.'); window.location.href='FeuilleMatchController.php?action=modifier&id_match={$id_match}';</script>";
             exit;
         }
 
@@ -285,14 +297,6 @@ switch ($action) {
             }
         }
 
-        // Vérifier qu'il y a au moins 11 titulaires
-        if ($titularCount < 11) {
-            $_SESSION['error'] = "Vous devez sélectionner au moins 11 titulaires pour valider la sélection.";
-            header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
-            exit;
-        }
-
-        // Appliquer les modifications si la validation est réussie
         try {
             foreach ($selections as $selection) {
                 $data = [
@@ -303,15 +307,21 @@ switch ($action) {
                 ];
                 $feuilleMatch->modifierSelection($data);
             }
-            $_SESSION['success'] = "La sélection a été modifiée avec succès.";
-            header("Location: FeuilleMatchController.php?action=afficher&id_match={$id_match}");
+
+            echo "<script>
+                        alert('La sélection a été modifiée avec succès.');
+                        window.location.href='FeuilleMatchController.php?action=afficher&id_match={$id_match}';
+                      </script>";
             exit;
         } catch (Exception $e) {
-            $_SESSION['error'] = "Erreur lors de la modification : " . $e->getMessage();
-            header("Location: FeuilleMatchController.php?action=modifier&id_match={$id_match}");
+            echo "<script>
+                        alert('Erreur lors de la modification : " . $e->getMessage() . "');
+                        window.location.href='FeuilleMatchController.php?action=modifier&id_match={$id_match}';
+                      </script>";
             exit;
         }
         break;
+
 
 
     case 'valider_feuille':

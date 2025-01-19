@@ -1,4 +1,11 @@
 <?php
+/**
+ * Contrôleur d'inscription
+ *
+ * Ce fichier gère l'inscription des nouveaux utilisateurs.
+ * Il vérifie les données soumises, les insère dans la base de données si elles sont valides,
+ * et redirige l'utilisateur en conséquence.
+ */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }require_once '../config/database.php';

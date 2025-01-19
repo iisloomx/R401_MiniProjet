@@ -20,7 +20,7 @@
                     <a href="../controllers/MatchsController.php?action=liste  ">Matchs</a>
                     <a href="../controllers/StatistiquesController.php?action=index">Statistiques</a> 
             
-                <a href="/MiniprojetR3.01/views/mon_compte.php" class="btn-account">Mon Compte</a>
+                <a href="../controllers/MonCompteController.php?action=afficher" class="btn btn-account">Mon Compte</a>
                 <a href="/MiniprojetR3.01/controllers/DeconnexionController.php" class="btn-logout">Déconnexion</a>
             <?php endif; ?>
         </nav>

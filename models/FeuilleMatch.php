@@ -1,4 +1,5 @@
 <?php
+// Modèle FeuilleMatch
 class FeuilleMatch
 {
     private $conn;
@@ -22,7 +23,7 @@ class FeuilleMatch
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    // Ajouter un joueur a une selection pour un match donné
     public function ajouterJoueur($data)
     {
         // Vérifier si le joueur est déjà enregistré pour ce match
@@ -64,7 +65,7 @@ class FeuilleMatch
         return $stmt->execute();
     }
 
-
+    // Modifier la selection pour un match
     public function modifierSelection($data)
     {
         // Vérifier si les données sont présentes
@@ -94,7 +95,7 @@ class FeuilleMatch
 
         return $result;
     }
-
+    // MAJ de l'évaluation d'un joeur
     public function mettreAJourEvaluation($data)
     {
         // Vérifier si les données sont présentes
@@ -125,9 +126,7 @@ class FeuilleMatch
         return $result;
     }
 
-
-
-
+    // Récupérer les titulaires d'un match
     public function obtenirTitulairesParMatch($id_match)
     {
         $query = "SELECT j.nom AS nom_joueur, j.prenom AS prenom_joueur, p.role, p.poste, j.numero_licence
@@ -140,8 +139,7 @@ class FeuilleMatch
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-
+    // Récupérer les remplaçants d'un match
     public function obtenirRemplacantsParMatch($id_match)
     {
         $query = "SELECT j.nom AS nom_joueur, j.prenom AS prenom_joueur, p.role, p.poste, j.numero_licence
@@ -154,7 +152,7 @@ class FeuilleMatch
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return !empty($results) ? $results : null;
     }
-
+    // Récupérer les joueurs non selectionnés d'un match donné
     public function obtenirJoueursNonSelectionnes($id_match)
     {
         $query = "
@@ -173,6 +171,7 @@ class FeuilleMatch
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Supprimer un joueur d'une selection par son numero de licence et l'id de match
     public function supprimerJoueurParLicenceEtMatch($numero_licence, $id_match)
     {
         // Supprimer le joueur du match
@@ -194,9 +193,7 @@ class FeuilleMatch
         return $result;
     }
 
-
-
-
+    // MAJ de l'évaluation de l'état de la feuille de match
     public function mettreAJourEtatMatch($id_match, $statut)
     {
         $query = "UPDATE `match_` SET etat_feuille = :statut WHERE id_match = :id_match";
@@ -206,17 +203,18 @@ class FeuilleMatch
         return $stmt->execute();
     }
 
-
+    // Obtenir la moyenne des evaluation d'un joueur
     public function obtenirMoyenneEvaluation($numero_licence)
     {
-        $query = "SELECT AVG(evaluation) as moyenne 
-                  FROM participer 
-                  WHERE numero_licence = :numero_licence AND evaluation IS NOT NULL";
+        $query = "
+            SELECT AVG(evaluation) AS moyenne 
+            FROM participer 
+            WHERE numero_licence = :numero_licence AND evaluation IS NOT NULL
+        ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':numero_licence', $numero_licence);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result['moyenne'] ?? null;
+        return $result['moyenne'] ? round($result['moyenne'], 2) : 0.0;
     }
 }

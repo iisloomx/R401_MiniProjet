@@ -17,7 +17,7 @@
 
 
         <a href="../controllers/JoueursController.php?action=ajouter" class="btn btn-add">Ajouter un Joueur</a>
-
+        <a href="../views/dashboard.php" class="btn btn-back">Retour</a>
         <?php if (!empty($joueurs)) : ?>
             <table id="joueurs-table">
                 <thead>

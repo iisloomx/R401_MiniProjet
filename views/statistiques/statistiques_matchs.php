@@ -33,7 +33,7 @@ include '../views/header.php'; ?>
 
         <!-- Bouton de retour -->
         <div class="return-button">
-            <a href="../controllers/StatistiquesController.php?action=index" class="btn btn-stat">Retour aux Statistiques</a>
+            <a href="../controllers/StatistiquesController.php?action=index" class="btn btn-back">Retour</a>
         </div>
     </div>
 </body>

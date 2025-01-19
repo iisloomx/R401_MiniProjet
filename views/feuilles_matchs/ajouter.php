@@ -16,7 +16,7 @@ include '../views/header.php'; ?>
             const playerSelect = document.getElementById("numero_licence");
             const playerDetails = document.getElementById("player-details");
 
-            // Player data from PHP
+            
             const playerData = <?= json_encode($joueursNonSelectionnes) ?>;
 
             playerSelect.addEventListener("change", () => {

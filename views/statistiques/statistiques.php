@@ -11,30 +11,6 @@ include '../views/header.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistiques</title>
     <link rel="stylesheet" href="../views/css/style.css">
-    <style>
-        /* Styles CSS */
-        .btn-stat {
-            display: inline-block;
-            background-color: #f39c12; /* Orange */
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 10px 5px;
-            font-size: 16px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .btn-stat:hover {
-            background-color: #e67e22; /* Darker orange */
-            transform: scale(1.05);
-        }
-
-        .btn-stat:visited {
-            color: white;
-        }
-    </style>
 </head>
 
 <body>
@@ -45,7 +21,7 @@ include '../views/header.php'; ?>
         <div class="stat-buttons">
         <a href="../controllers/StatistiquesController.php?action=matchs" class="btn btn-stat">Statistiques des Matchs</a>
         <a href="../controllers/StatistiquesController.php?action=joueurs" class="btn btn-stat">Statistiques des Joueurs</a>
-        <a href="../views/dashboard.php" class="btn btn-stat">Retour</a>
+        <a href="../views/dashboard.php" class="btn btn-back">Retour</a>
         </div>
     </div>
 </body>

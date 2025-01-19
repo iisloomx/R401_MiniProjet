@@ -1,4 +1,5 @@
 <?php
+// Modèle Statistiques
 
 class Statistiques
 {

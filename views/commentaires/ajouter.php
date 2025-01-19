@@ -1,5 +1,8 @@
 <?php 
-session_start(); 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (!isset($_SESSION['utilisateur'])) {
     header('Location: ../controllers/UtilisateurController.php?action=connexion');
     exit();
@@ -19,7 +22,7 @@ include '../views/header.php';
     <div class="container">
         <h1>Ajouter un Commentaire pour le Joueur</h1>
 
-        <!-- Form to add the comment -->
+        <!-- Form pour ajouter un commentaire -->
         <form action="CommentaireController.php?action=ajouter_commentaire&numero_licence=<?= $_GET['numero_licence'] ?>" method="POST">
             <div>
                 <label for="sujet_commentaire">Sujet du Commentaire</label>
@@ -36,7 +39,7 @@ include '../views/header.php';
             </div>
         </form>
 
-        <a href="../controllers/JoueursController.php?action=lister" class="button">Retour à la Liste des Joueurs</a>
+        <a href="../controllers/JoueursController.php?action=lister" class="btn btn-back">Retour à la Liste des Joueurs</a>
     </div>
 </body>
 </html>
