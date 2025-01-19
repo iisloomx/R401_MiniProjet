@@ -1,11 +1,4 @@
-<?php 
-session_start(); 
-if (!isset($_SESSION['utilisateur'])) {
-    header('Location: ../controllers/UtilisateurController.php?action=connexion');
-    exit();
-}
-include '../views/header.php'; 
-?>
+<?php session_start(); include '../views/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">

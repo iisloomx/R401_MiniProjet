@@ -299,9 +299,6 @@ form button:hover {
 .btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match , .btn-stat{
     background-color: #4CAF50; /* Green */
 }
-.btn-deco {
-    background-color: #e74c3c; /* Red */
-}
 
 .btn-add-joueur:hover {
     background-color: #45a049;

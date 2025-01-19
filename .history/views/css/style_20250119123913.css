@@ -296,11 +296,8 @@ form button:hover {
     background-color: #45a049;
 }
 
-.btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match , .btn-stat{
+.btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match {
     background-color: #4CAF50; /* Green */
-}
-.btn-deco {
-    background-color: #e74c3c; /* Red */
 }
 
 .btn-add-joueur:hover {
@@ -342,7 +339,7 @@ form button:hover {
     background-color: #f39c12;
 }
 
-.btn-stat:hover {
+.btn-gestjou-stat:hover {
     background-color: #e67e22; /* Orange plus foncé */
     transform: scale(1.05);
 }
