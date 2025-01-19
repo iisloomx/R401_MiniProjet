@@ -1,3 +1,4 @@
+<?php include '../views/header.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -20,64 +21,64 @@
             }
         });
     </script>
-    <a href="../controllers/MatchsController.php?action=liste" class="btn btn-return">
+    <a href="../controllers/MatchsController.php?action=liste" class="btn btn-back">
         Retour à la liste des matchs
     </a>
 </head>
 
 <body>
-    <div class="match-details">
-        <h1>Détails du Match</h1>
+    <div class="container">
+            <h1>Détails du Match</h1>
 
-        <!-- Affichage des informations du match -->
-        <?php if (isset($match)): ?>
-            <p><strong>Date :</strong> <?= htmlspecialchars($match['date_match']); ?></p>
-            <p><strong>Heure :</strong> <?= htmlspecialchars($match['heure_match']); ?></p>
-            <p><strong>Équipe Adverse :</strong> <?= htmlspecialchars($match['nom_equipe_adverse']); ?></p>
-            <p><strong>Lieu :</strong> <?= htmlspecialchars($match['lieu_de_rencontre']); ?></p>
-            <p><strong>Résultat :</strong> <?= htmlspecialchars($match['resultat'] ?? 'N/A'); ?></p>
-        <?php else: ?>
-            <p>Aucune information sur ce match.</p>
-        <?php endif; ?>
-
-        <h2>Actions disponibles</h2>
-        <div class="actions">
-            <?php if ($match['etat_feuille'] === 'Non validé' || $match['statut'] === 'À venir'): ?>
-                <a href="FeuilleMatchController.php?action=valider_feuille&id_match=<?= htmlspecialchars($match['id_match']); ?>"
-                    class="btn btn-validate">
-                    Valider la Feuille de Match
-                </a>
-            <?php elseif ($match['etat_feuille'] === 'Validé' && $match['statut'] === 'À venir'): ?>
-                <p>La feuille de match est validée, mais vous pouvez toujours la modifier.</p>
+            <!-- Affichage des informations du match -->
+            <?php if (isset($match)): ?>
+                <p><strong>Date :</strong> <?= htmlspecialchars($match['date_match']); ?></p>
+                <p><strong>Heure :</strong> <?= htmlspecialchars($match['heure_match']); ?></p>
+                <p><strong>Équipe Adverse :</strong> <?= htmlspecialchars($match['nom_equipe_adverse']); ?></p>
+                <p><strong>Lieu :</strong> <?= htmlspecialchars($match['lieu_de_rencontre']); ?></p>
+                <p><strong>Résultat :</strong> <?= htmlspecialchars($match['resultat'] ?? 'N/A'); ?></p>
+            <?php else: ?>
+                <p>Aucune information sur ce match.</p>
             <?php endif; ?>
 
-            <!-- Actions disponibles, même après validation -->
+            <h2>Actions disponibles</h2>
+            <div class="actions">
+                <?php if ($match['etat_feuille'] === 'Non validé' || $match['statut'] === 'À venir'): ?>
+                    <a href="FeuilleMatchController.php?action=valider_feuille&id_match=<?= htmlspecialchars($match['id_match']); ?>"
+                        class="btn btn-add">
+                        Valider la Feuille de Match
+                    </a>
+                <?php elseif ($match['etat_feuille'] === 'Validé' && $match['statut'] === 'À venir'): ?>
+                    <p>La feuille de match est validée, mais vous pouvez toujours la modifier.</p>
+                <?php endif; ?>
+
+                <!-- Actions disponibles, même après validation -->
+                <?php if ($match['statut'] === 'À venir'): ?>
+                    <a href="../controllers/FeuilleMatchController.php?action=ajouter&id_match=<?= $match['id_match']; ?>" class="btn btn-add">
+                        Ajouter Joueur
+                    </a>
+            </div>
+            <?php endif; ?>
+
             <?php if ($match['statut'] === 'À venir'): ?>
-                <a href="../controllers/FeuilleMatchController.php?action=ajouter&id_match=<?= $match['id_match']; ?>" class="btn btn-add">
-                    Ajouter Joueur
+                <a href="../controllers/FeuilleMatchController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">
+                    Modifier les Joueurs
                 </a>
-        </div>
-    <?php endif; ?>
+            <?php endif; ?>
 
-    <?php if ($match['statut'] === 'À venir'): ?>
-        <a href="../controllers/FeuilleMatchController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">
-            Modifier les Joueurs
-        </a>
-    <?php endif; ?>
+            <?php if ($match['statut'] === 'À venir'): ?>
+                <a href="../controllers/FeuilleMatchController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">
+                    Supprimer Joueurs de la Sélection
+                </a>
+            <?php endif; ?>
 
-    <?php if ($match['statut'] === 'À venir'): ?>
-        <a href="../controllers/FeuilleMatchController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">
-            Supprimer Joueurs de la Sélection
-        </a>
-    <?php endif; ?>
+            <?php if ($match['statut'] === 'Terminé'): ?>
+                <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-add">
+                    Évaluer les joueurs
+                </a>
+            <?php endif; ?>
 
-    <?php if ($match['statut'] === 'Terminé'): ?>
-        <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-evaluate">
-            Évaluer les joueurs
-        </a>
-    <?php endif; ?>
-
-    </div>
+            <div class="table-container-feuille">
     <h2>Liste des Joueurs pour ce Match</h2>
 
     <h3>Titulaires</h3>
@@ -127,7 +128,10 @@
             </tbody>
         </table>
     <?php endif; ?>
-    </div>
+</div>
+
+  
+</div>
 </body>
 
 </html>

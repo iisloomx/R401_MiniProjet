@@ -40,6 +40,8 @@ include '../views/header.php'; ?>
 
 <body>
     <div class="container">
+        <a href="../controllers/FeuilleMatchController.php?action=afficher&id_match=<?= htmlspecialchars($id_match) ?>" class="btn btn-back">Retour</a>
+
         <h1>Ajouter un Joueur à la Feuille de Match</h1>
 
         <!-- Afficher un message d'erreur s'il y en a -->

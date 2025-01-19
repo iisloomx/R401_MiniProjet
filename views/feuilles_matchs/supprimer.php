@@ -38,7 +38,9 @@ include '../views/header.php'; ?>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
-    <div class="container">
+    <div class="table-container">
+        <a href="../controllers/FeuilleMatchController.php?action=afficher&id_match=<?= htmlspecialchars($id_match) ?>" class="btn btn-back">Retour</a>
+
         <h1>Supprimer des Joueurs de la Feuille de Match</h1>
         <form action="FeuilleMatchController.php?action=valider_suppression&id_match=<?= htmlspecialchars($id_match) ?>" method="POST">
             <h2>Joueurs Sélectionnés</h2>

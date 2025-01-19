@@ -81,6 +81,41 @@ body {
     text-align: center;
 }
 
+.table-container-feuille {
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+}
+
+
+table {
+    border-collapse: collapse;
+    width: auto; /* Adjust table width to its content */
+    margin: 20px 0; /* Add some space above and below the table */
+}
+
+table th, table td {
+    border: 1px solid #ddd; /* Add a border to table cells */
+    padding: 8px; /* Add some padding inside the cells */
+    text-align: left; /* Align text to the left */
+}
+
+table th {
+    background-color: #f4f4f4; /* Light gray background for headers */
+    font-weight: bold;
+}
+
+.table-wrapper {
+    max-width: 90%; /* Set a maximum width for the table container */
+    max-height: 400px; /* Set a maximum height for the table container */
+    overflow: auto; /* Add horizontal and vertical scrollbars when needed */
+    border: 1px solid #ddd; /* Optional: Border around the scrollable area */
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+
 /* Container Styles */
 .container {
     max-width: 800px;
@@ -261,7 +296,7 @@ form button:hover {
     background-color: #45a049;
 }
 
-.btn-add-joueur {
+.btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match {
     background-color: #4CAF50; /* Green */
 }
 
@@ -284,11 +319,11 @@ form button:hover {
     background-color: #2980b9;
 }
 
-.btn-delete {
+.btn-delete, .btn-deco {
     background-color: #e74c3c; /* Red */
 }
 
-.btn-delete:hover {
+.btn-delete:hover, .btn-deco:hover {
     background-color: #c0392b;
 }
 
@@ -299,6 +334,21 @@ form button:hover {
 .btn-back:hover {
     background-color: #8e44ad;
 }
+
+.btn-stat {
+    background-color: #f39c12;
+}
+
+.btn-stat:hover {
+    background-color: #e67e22; /* Orange plus foncé */
+    transform: scale(1.05);
+}
+
+/* Pour garantir une bonne apparence si un lien "visité" */
+.btn-stat:visited {
+    color: white;
+}
+
 
 
 /* Footer Styles */

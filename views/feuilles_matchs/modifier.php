@@ -61,6 +61,8 @@ include '../views/header.php'; ?>
 
 
     <div class="container">
+    <a href="../controllers/FeuilleMatchController.php?action=afficher&id_match=<?= htmlspecialchars($id_match) ?>" class="btn btn-back">Retour</a>
+
         <h1>Modifier la Sélection des Joueurs</h1>
         <form action="FeuilleMatchController.php?action=valider_modification&id_match=<?= htmlspecialchars($id_match) ?>" method="POST">
             <h2>Joueurs disponibles</h2>
