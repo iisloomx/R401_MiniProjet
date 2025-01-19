@@ -1,8 +1,7 @@
 <?php 
-if (session_status() === PHP_SESSION_NONE) {
+if (!isset($_SESSION)) {
     session_start();
 }
-
 if (!isset($_SESSION['utilisateur'])) {
     header('Location: ../controllers/UtilisateurController.php?action=connexion');
     exit();
