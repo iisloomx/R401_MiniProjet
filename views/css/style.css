@@ -311,7 +311,7 @@ form button:hover {
     background-color: #b2b24e; /* Green */
 }
 
-.btn-edit {
+.btn-edit .btn-create-compte {
     background-color: #3498db; /* Blue */
 }
 
