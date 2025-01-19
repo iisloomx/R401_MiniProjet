@@ -296,11 +296,8 @@ form button:hover {
     background-color: #45a049;
 }
 
-.btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match {
+.btn-add-joueur, .btn-gestmatch, .btn-gestjou, .btngest-match , btn-stat{
     background-color: #4CAF50; /* Green */
-}
-.btn-deco {
-    background-color: #e74c3c; /* Red */
 }
 
 .btn-add-joueur:hover {
@@ -339,18 +336,19 @@ form button:hover {
 }
 
 .btn-stat {
-    background-color: #12c2f3;
+    background-color: #f39c12;
 }
 
 .btn-stat:hover {
-    background-color: #22a1e6; /* Orange plus foncé */
+    background-color: #e67e22; /* Orange plus foncé */
     transform: scale(1.05);
 }
 
 /* Pour garantir une bonne apparence si un lien "visité" */
 .btn-stat:visited {
-    color:#22a1e6;
+    color: white;
 }
+
 
 
 /* Footer Styles */
@@ -539,17 +537,4 @@ form button:hover {
     margin-top: 20px;
 }
 
-}
-
-.btn-edit {
-    background-color: #3498db; /* Blue */
-}
-
-.btn-delete {
-    background-color: #e74c3c; /* Red */
-}
-
-/* orange */
-.btn-back {
-    background-color: #e49f13;
 }

@@ -1,5 +1,20 @@
 <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    /**
+ * Contrôleur des joueurs
+ *
+ * Ce fichier gère les différentes actions liées à la gestion des joueurs, 
+ * telles que l'affichage de la liste des joueurs, l'ajout, la modification 
+ * et la suppression d'un joueur.
+ *
+ * Actions disponibles :
+ * - `liste` : Affiche tous les joueurs.
+ * - `ajouter` : Permet d'ajouter un nouveau joueur.
+ * - `modifier` : Permet de modifier les informations d'un joueur existant.
+ * - `supprimer` : Supprime un joueur spécifique.
+ *
+ * Les actions utilisent les méthodes du modèle `Joueur` pour interagir avec la base de données.
+ */
 } ?>
 <?php include '../views/header.php'; ?>
 

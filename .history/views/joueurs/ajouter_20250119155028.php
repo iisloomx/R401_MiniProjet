@@ -1,7 +1,7 @@
-<?php  
-if (session_status() === PHP_SESSION_NONE) {
+<?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
 } ?>
+include '../views/header.php'; ?>
 
 <!DOCTYPE html>
 <html>

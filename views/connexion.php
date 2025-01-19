@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include 'header.php';
 ?>
 
-<div class="form-container">
+<div class="container">
     <h2>Connexion</h2>
 
     <!-- Message d'erreur en cas d'échec de connexion -->
@@ -26,7 +26,7 @@ include 'header.php';
 
     <!-- Lien pour créer un compte -->
     <p class="create-account-container">
-        Pas encore de compte ? <a href="inscription.php" class="create-account-link">Créer un compte</a>
+        Pas encore de compte ? <a href="inscription.php" class="btn-create-comptecreate-account-link">Créer un compte</a>
     </p>
 </div>
 
