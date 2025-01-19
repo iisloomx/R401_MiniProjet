@@ -8,7 +8,7 @@ include '../views/header.php'; ?>
 <head>
     <meta charset="UTF-8">
     <title>Mon Compte</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="views/css/style.css">
 </head>
 <body>
     <div class="container">

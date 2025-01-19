@@ -17,7 +17,7 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <title>Tableau de Bord</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="views/css/style.css">
     <style>
         .btn-stat {
             background-color: #12c2f3;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tableau de Bord</title>
-    <link rel="stylesheet" href="/MiniprojetR3.01/views/css/style.css">
+    <link rel="stylesheet" href="views/css/style.css">
 </head>
 
 <body>

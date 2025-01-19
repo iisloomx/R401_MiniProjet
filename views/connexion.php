@@ -11,7 +11,7 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link rel="stylesheet" href="..css/styles.css"> <!-- Chemin vers la feuille de style -->
+    <link rel="stylesheet" href="views/css/style.css"> <!-- Chemin vers la feuille de style -->
     <style>
         .btn-create-compte {
             background-color: #34dbb1;
