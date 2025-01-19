@@ -4,6 +4,7 @@
 include '../views/header.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Supprimer des Joueurs</title>
@@ -15,12 +16,28 @@ include '../views/header.php'; ?>
             padding: 10px;
             border-radius: 5px;
         }
+
         .player-info {
             margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
+    <?php if (!empty($_SESSION['error'])): ?>
+        <script>
+            alert("<?= htmlspecialchars($_SESSION['error']); ?>");
+        </script>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['success'])): ?>
+        <script>
+            alert("<?= htmlspecialchars($_SESSION['success']); ?>");
+        </script>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
     <div class="container">
         <h1>Supprimer des Joueurs de la Feuille de Match</h1>
         <form action="FeuilleMatchController.php?action=valider_suppression&id_match=<?= htmlspecialchars($id_match) ?>" method="POST">
@@ -30,9 +47,9 @@ include '../views/header.php'; ?>
             <?php if (empty($titulaires) && empty($remplacants)): ?>
                 <p class="no-players">Aucun joueur trouvé pour ce match.</p>
             <?php else: ?>
-                <?php 
-                $joueurs = array_merge($titulaires, $remplacants); 
-                foreach ($joueurs as $index => $joueur): 
+                <?php
+                $joueurs = array_merge($titulaires, $remplacants);
+                foreach ($joueurs as $index => $joueur):
                 ?>
                     <div class="player-selection">
                         <label>
@@ -42,7 +59,7 @@ include '../views/header.php'; ?>
                                 value="<?= htmlspecialchars($joueur['numero_licence']) ?>">
                             <?= htmlspecialchars($joueur['nom_joueur'] . ' ' . $joueur['prenom_joueur']) ?>
                         </label>
-                        
+
                         <div class="player-info">
                             <p><strong>Rôle :</strong> <?= htmlspecialchars($joueur['role'] ?? 'N/A') ?></p>
                             <p><strong>Poste :</strong> <?= htmlspecialchars($joueur['poste'] ?? 'N/A') ?></p>
@@ -55,4 +72,5 @@ include '../views/header.php'; ?>
         </form>
     </div>
 </body>
+
 </html>

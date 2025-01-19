@@ -1,11 +1,11 @@
 <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
-} include '../views/header.php'; ?>
+}?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Ajouter un joueur</title>
-    <link rel="stylesheet" href="../views/css/style_joueur.css">
+    <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
     <h1>Ajouter un nouveau joueur</h1>

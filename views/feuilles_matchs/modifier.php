@@ -4,6 +4,7 @@
 include '../views/header.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Modifier la Sélection des Joueurs</title>
@@ -15,6 +16,7 @@ include '../views/header.php'; ?>
             padding: 10px;
             border-radius: 5px;
         }
+
         .player-info {
             margin-bottom: 10px;
         }
@@ -38,48 +40,38 @@ include '../views/header.php'; ?>
                 posteField.setAttribute('required', true);
             }
         }
-
-        function validateSelection(event) {
-            // Count the number of titular players selected
-            const titularCount = Array.from(document.querySelectorAll('select[name$="[role]"]'))
-                .filter(select => select.value === "Titulaire")
-                .length;
-
-            if (titularCount < 11) {
-                event.preventDefault();
-                const addPlayers = confirm(
-                    "Vous devez avoir au moins 11 titulaires pour valider la sélection. Voulez-vous ajouter des joueurs ?"
-                );
-
-                if (addPlayers) {
-                    // Redirect to ajouter.php
-                    window.location.href = "FeuilleMatchController.php?action=ajouter&id_match=<?= htmlspecialchars($id_match) ?>";
-                }
-            }
-        }
     </script>
 </head>
+
 <body>
     <!-- Error message -->
     <?php if (!empty($_SESSION['error'])): ?>
-        <script>
-            alert("<?= htmlspecialchars($_SESSION['error']); ?>");
-        </script>
+        <div class="error-message">
+            <?= htmlspecialchars($_SESSION['error']); ?>
+        </div>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="success-message">
+            <?= htmlspecialchars($_SESSION['success']); ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+
     <div class="container">
         <h1>Modifier la Sélection des Joueurs</h1>
-        <form action="FeuilleMatchController.php?action=valider_modification&id_match=<?= htmlspecialchars($id_match) ?>" method="POST" onsubmit="validateSelection(event)">
+        <form action="FeuilleMatchController.php?action=valider_modification&id_match=<?= htmlspecialchars($id_match) ?>" method="POST">
             <h2>Joueurs disponibles</h2>
             <input type="hidden" name="id_match" value="<?= htmlspecialchars($id_match) ?>">
 
             <?php if (empty($titulaires) && empty($remplacants)): ?>
                 <p class="no-players">Aucun joueur trouvé pour ce match.</p>
             <?php else: ?>
-                <?php 
-                $joueurs = array_merge($titulaires, $remplacants); 
-                foreach ($joueurs as $index => $joueur): 
+                <?php
+                $joueurs = array_merge($titulaires, $remplacants);
+                foreach ($joueurs as $index => $joueur):
                 ?>
                     <div class="player-selection">
                         <label>
@@ -90,7 +82,7 @@ include '../views/header.php'; ?>
                                 onclick="toggleFields(this, <?= $index ?>)">
                             <?= htmlspecialchars($joueur['nom_joueur'] . ' ' . $joueur['prenom_joueur']) ?>
                         </label>
-                        
+
                         <div class="player-info">
                             <p><strong>Poste actuel :</strong> <?= htmlspecialchars($joueur['poste'] ?? 'N/A') ?></p>
                         </div>
@@ -124,4 +116,5 @@ include '../views/header.php'; ?>
         </form>
     </div>
 </body>
+
 </html>

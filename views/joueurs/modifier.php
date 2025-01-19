@@ -1,10 +1,11 @@
 <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
-} include '../views/header.php'; ?><!DOCTYPE html>
+} ?>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../views/css/style.css">
     <title>Modifier un Joueur</title>
 </head>
 <body>

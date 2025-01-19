@@ -1,20 +1,20 @@
 <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
-} include '../views/header.php'; ?>
+} ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Joueurs</title>
-    <link rel="stylesheet" href="../views/css/style_joueur.css">
+    <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
     <div class="table-container">
         <h1>Liste des Joueurs</h1>
 
 
-<a href="../controllers/JoueursController.php?action=ajouter" class="btn-add-joueur">Ajouter un Joueur</a>
+<a href="../controllers/JoueursController.php?action=ajouter" class="btn-add btn-add-joueur">Ajouter un Joueur</a>
 
 <?php if (!empty($joueurs)) : ?>
     <table id="joueurs-table">

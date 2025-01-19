@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +20,11 @@
             }
         });
     </script>
-        <a href="../controllers/MatchsController.php?action=liste" class="btn btn-return">
-            Retour à la liste des matchs
-        </a>
+    <a href="../controllers/MatchsController.php?action=liste" class="btn btn-return">
+        Retour à la liste des matchs
+    </a>
 </head>
+
 <body>
     <div class="match-details">
         <h1>Détails du Match</h1>
@@ -40,12 +42,12 @@
 
         <h2>Actions disponibles</h2>
         <div class="actions">
-        <?php if ($match['etat_feuille'] === 'Non validé' || $match['statut'] === 'À venir'): ?>
-                <a href="FeuilleMatchController.php?action=valider_feuille&id_match=<?= htmlspecialchars($match['id_match']); ?>" 
+            <?php if ($match['etat_feuille'] === 'Non validé' || $match['statut'] === 'À venir'): ?>
+                <a href="FeuilleMatchController.php?action=valider_feuille&id_match=<?= htmlspecialchars($match['id_match']); ?>"
                     class="btn btn-validate">
                     Valider la Feuille de Match
                 </a>
-            <?php elseif ($match['etat_feuille'] === 'Validé'): ?>
+            <?php elseif ($match['etat_feuille'] === 'Validé' && $match['statut'] === 'À venir'): ?>
                 <p>La feuille de match est validée, mais vous pouvez toujours la modifier.</p>
             <?php endif; ?>
 
@@ -54,85 +56,84 @@
                 <a href="../controllers/FeuilleMatchController.php?action=ajouter&id_match=<?= $match['id_match']; ?>" class="btn btn-add">
                     Ajouter Joueur
                 </a>
-                </div>
-            <?php endif; ?>
-            
-            <?php if ($match['statut'] === 'À venir'): ?>
-                <a href="../controllers/FeuilleMatchController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">
-                    Modifier les Joueurs
-                </a>
-            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-            <?php if ($match['statut'] === 'À venir'): ?>
-            <a href="../controllers/FeuilleMatchController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">
-                Supprimer Joueurs de la Sélection
-            </a>
-            <?php endif; ?>
+    <?php if ($match['statut'] === 'À venir'): ?>
+        <a href="../controllers/FeuilleMatchController.php?action=modifier&id_match=<?= $match['id_match']; ?>" class="btn btn-edit">
+            Modifier les Joueurs
+        </a>
+    <?php endif; ?>
 
-            <?php if ($match['statut'] === 'Terminé'): ?>
-                    <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-evaluate">
-                        Évaluer les joueurs
-                    </a>
-            <?php endif; ?>
+    <?php if ($match['statut'] === 'À venir'): ?>
+        <a href="../controllers/FeuilleMatchController.php?action=supprimer&id_match=<?= $match['id_match']; ?>" class="btn btn-delete">
+            Supprimer Joueurs de la Sélection
+        </a>
+    <?php endif; ?>
 
+    <?php if ($match['statut'] === 'Terminé'): ?>
+        <a href="../controllers/FeuilleMatchController.php?action=evaluer&id_match=<?= $match['id_match']; ?>" class="btn btn-evaluate">
+            Évaluer les joueurs
+        </a>
+    <?php endif; ?>
 
+    </div>
+    <h2>Liste des Joueurs pour ce Match</h2>
 
-        </div>           
-        <h2>Liste des Joueurs pour ce Match</h2>
-
-        <h3>Titulaires</h3>
-        <?php if (empty($titulaires)) : ?>
-            <p>Aucun titulaire trouvé.</p>
-        <?php else : ?>
-            <table>
-                <thead>
+    <h3>Titulaires</h3>
+    <?php if (empty($titulaires)) : ?>
+        <p>Aucun titulaire trouvé.</p>
+    <?php else : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Poste</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($titulaires as $joueur) : ?>
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Poste</th>
+                        <td><?= htmlspecialchars($joueur['nom_joueur'] ?? 'N/A'); ?></td>
+                        <td><?= htmlspecialchars($joueur['prenom_joueur'] ?? 'N/A'); ?></td>
+                        <td><?= htmlspecialchars($joueur['poste'] ?? 'N/A'); ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($titulaires as $joueur) : ?>
-                        <tr>
-                            <td><?= htmlspecialchars($joueur['nom_joueur'] ?? 'N/A'); ?></td>
-                            <td><?= htmlspecialchars($joueur['prenom_joueur'] ?? 'N/A'); ?></td>
-                            <td><?= htmlspecialchars($joueur['poste'] ?? 'N/A'); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 
-        <h3>Remplaçants</h3>
-        <?php if (empty($remplacants)) : ?>
-            <p>Aucun remplaçant trouvé.</p>
-        <?php else : ?>
-            <table>
-                <thead>
+    <h3>Remplaçants</h3>
+    <?php if (empty($remplacants)) : ?>
+        <p>Aucun remplaçant trouvé.</p>
+    <?php else : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Poste</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($remplacants as $joueur) : ?>
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Poste</th>
+                        <td><?= htmlspecialchars($joueur['nom_joueur'] ?? 'N/A'); ?></td>
+                        <td><?= htmlspecialchars($joueur['prenom_joueur'] ?? 'N/A'); ?></td>
+                        <td><?= htmlspecialchars($joueur['poste'] ?? 'N/A'); ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($remplacants as $joueur) : ?>
-                        <tr>
-                            <td><?= htmlspecialchars($joueur['nom_joueur'] ?? 'N/A'); ?></td>
-                            <td><?= htmlspecialchars($joueur['prenom_joueur'] ?? 'N/A'); ?></td>
-                            <td><?= htmlspecialchars($joueur['poste'] ?? 'N/A'); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
     </div>
 </body>
+
 </html>
-<?php 
+<?php
 // Nettoyage des messages après affichage
 unset($_SESSION['error']);
 unset($_SESSION['success']);
-include '../views/footer.php'; 
+include '../views/footer.php';
 ?>

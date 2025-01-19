@@ -23,6 +23,29 @@ body {
     z-index: 1000;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+
 .logo img {
     height: 50px;
 }
@@ -238,6 +261,13 @@ form button:hover {
     background-color: #45a049;
 }
 
+.btn-add-joueur {
+    background-color: #4CAF50; /* Green */
+}
+
+.btn-add-joueur:hover {
+    background-color: #45a049;
+
 .btn-feuille {
     background-color: #d6d65b; /* Green */
 }
@@ -269,6 +299,7 @@ form button:hover {
 .btn-back:hover {
     background-color: #8e44ad;
 }
+
 
 /* Footer Styles */
 .main-footer {
@@ -454,4 +485,6 @@ form button:hover {
     color: #555;
     font-size: 16px;
     margin-top: 20px;
+}
+
 }
