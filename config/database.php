@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private $host = 'mysql-evalsport.alwaysdata.net'; 
+    private $host = 'localhost'; 
     private $db_name = 'evalsport_gestion_equipe_football';
-    private $username = 'evalsport';
-    private $password = '@Cgt4._7rV_ayyU';  
+    private $username = 'root';
+    private $password = '';  
     public $conn;
 
     // Méthode pour établir la connexion

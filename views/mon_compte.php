@@ -1,3 +1,5 @@
+
+
 <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,7 +10,7 @@ include '../views/header.php'; ?>
 <head>
     <meta charset="UTF-8">
     <title>Mon Compte</title>
-    <link rel="stylesheet" href="views/css/style.css">
+    <link rel="stylesheet" href="../views/css/style.css">
 </head>
 <body>
     <div class="container">
@@ -47,7 +49,8 @@ include '../views/header.php'; ?>
         <?php endif; ?>
 
         <p>
-            <a href="dashboard.php" class="btn btn-back">Retour au dashboard</a>
+            <a href="../views/dashboard.php" class="btn btn-back">Retour au dashboard</a>
+
         </p>
     </div>
     <script>
